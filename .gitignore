@@ -1,0 +1,216 @@
+# ============================================================
+# Sadeq IT
+# Kotlin Multiplatform + Compose Multiplatform
+# Kotlin/Wasm + Kotlin/JS
+# GitHub Pages
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Gradle
+# ------------------------------------------------------------
+
+.gradle/
+**/.gradle/
+
+**/build/
+
+# Keep Gradle wrapper
+!gradle/wrapper/gradle-wrapper.jar
+
+
+# ------------------------------------------------------------
+# Kotlin
+# ------------------------------------------------------------
+
+.kotlin/
+**/.kotlin/
+
+*.kotlin_module
+
+
+# ------------------------------------------------------------
+# Kotlin/JS & Kotlin/Wasm
+# ------------------------------------------------------------
+
+node_modules/
+**/node_modules/
+
+.kotlin-js-store/
+**/.kotlin-js-store/
+
+# Keep dependency lock files for reproducible builds
+kotlin-js-store/*
+!kotlin-js-store/yarn.lock
+!kotlin-js-store/wasm/
+kotlin-js-store/wasm/*
+!kotlin-js-store/wasm/yarn.lock
+
+# Yarn / npm generated files
+.yarn/
+.yarn-cache/
+.yarn-integrity
+.pnp.*
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# ------------------------------------------------------------
+# IntelliJ IDEA / Android Studio
+# ------------------------------------------------------------
+
+.idea/
+**/.idea/
+
+*.iml
+*.ipr
+*.iws
+
+out/
+**/out/
+
+
+# ------------------------------------------------------------
+# Local machine configuration
+# ------------------------------------------------------------
+
+local.properties
+
+.env
+.env.*
+!.env.example
+
+
+# ------------------------------------------------------------
+# Operating System
+# ------------------------------------------------------------
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+.directory
+.Trash-*
+*~
+
+
+# ------------------------------------------------------------
+# Temporary / backup files
+# ------------------------------------------------------------
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.orig
+
+~$*
+
+
+# ------------------------------------------------------------
+# Logs
+# ------------------------------------------------------------
+
+*.log
+logs/
+**/logs/
+
+
+# ------------------------------------------------------------
+# Test / coverage output
+# ------------------------------------------------------------
+
+coverage/
+**/coverage/
+
+test-results/
+**/test-results/
+
+reports/
+**/reports/
+
+
+# ------------------------------------------------------------
+# Native / CMake
+# ------------------------------------------------------------
+
+.externalNativeBuild/
+**/.externalNativeBuild/
+
+.cxx/
+**/.cxx/
+
+captures/
+
+
+# ------------------------------------------------------------
+# Apple / Xcode
+# Kept for future KMP compatibility
+# ------------------------------------------------------------
+
+xcuserdata/
+
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+DerivedData/
+
+
+# ------------------------------------------------------------
+# Java / JVM
+# ------------------------------------------------------------
+
+*.class
+hs_err_pid*
+replay_pid*
+
+
+# ------------------------------------------------------------
+# Generated web distribution
+# GitHub Actions generates the deployment output
+# ------------------------------------------------------------
+
+dist/
+**/dist/
+
+
+# ------------------------------------------------------------
+# IDE / Editor
+# ------------------------------------------------------------
+
+.vscode/
+.history/
+
+
+# ------------------------------------------------------------
+# Misc generated files
+# ------------------------------------------------------------
+
+.cache/
+**/.cache/
+
+tmp/
+**/tmp/
+
+temp/
+**/temp/
