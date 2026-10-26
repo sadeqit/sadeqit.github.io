@@ -12,18 +12,22 @@ import sadeqit.github.io.presentation.screens.ContactScreen
 import sadeqit.github.io.presentation.screens.HomeScreen
 import sadeqit.github.io.presentation.screens.ProjectsScreen
 import sadeqit.github.io.presentation.screens.ResumeScreen
+import sadeqit.github.io.presentation.theme.AppThemeMode
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    themeMode: AppThemeMode,
+    onThemeModeChange: (AppThemeMode) -> Unit
+) {
     var currentRoute by remember {
         mutableStateOf<AppRoute>(AppRoute.Home)
     }
 
     AppShell(
         currentRoute = currentRoute,
-        onNavigate = { route ->
-            currentRoute = route
-        }
+        onNavigate = { route -> currentRoute = route },
+        themeMode = themeMode,
+        onThemeModeChange = onThemeModeChange
     ) {
         when (currentRoute) {
             AppRoute.Home -> HomeScreen()
