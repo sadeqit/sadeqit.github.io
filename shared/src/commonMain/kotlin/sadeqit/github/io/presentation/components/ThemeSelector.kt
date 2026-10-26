@@ -1,80 +1,102 @@
 package sadeqit.github.io.presentation.components
 
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import kotlinx.coroutines.delay
 import sadeqit.github.io.presentation.theme.AppThemeMode
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun ThemeSelector(
     themeMode: AppThemeMode,
     onThemeModeChange: (AppThemeMode) -> Unit
 ) {
-    var menuExpanded by remember {
-        mutableStateOf(false)
+    val solarRotation = rememberInfiniteTransition(
+        label = "SolarRotation"
+    )
+
+    val sunRotation by solarRotation.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 12000,
+                easing = LinearEasing
+            ),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "SunRotation"
+    )
+
+    val moonRotation = remember {
+        Animatable(0f)
+    }
+
+    LaunchedEffect(themeMode) {
+        if (themeMode == AppThemeMode.Dark) {
+            moonRotation.snapTo(0f)
+
+            while (true) {
+                delay(3000.milliseconds)
+
+                moonRotation.animateTo(
+                    targetValue = 360f,
+                    animationSpec = tween(
+                        durationMillis = 1000,
+                        easing = LinearEasing
+                    )
+                )
+
+                moonRotation.snapTo(0f)
+            }
+        } else {
+            moonRotation.snapTo(0f)
+        }
+    }
+
+    val rotation = when (themeMode) {
+        AppThemeMode.Light -> sunRotation
+        AppThemeMode.Dark -> moonRotation.value
     }
 
     TextButton(
-        onClick = {
-            menuExpanded = true
-        }
-    ) {
-        Text("تم")
-    }
-
-    DropdownMenu(
-        expanded = menuExpanded,
-        onDismissRequest = {
-            menuExpanded = false
-        }
-    ) {
-        ThemeMenuItem(
-            text = "روشن",
-            selected = themeMode == AppThemeMode.Light,
-            onClick = {
-                onThemeModeChange(AppThemeMode.Light)
-                menuExpanded = false
-            }
-        )
-
-        ThemeMenuItem(
-            text = "تیره",
-            selected = themeMode == AppThemeMode.Dark,
-            onClick = {
-                onThemeModeChange(AppThemeMode.Dark)
-                menuExpanded = false
-            }
-        )
-
-        ThemeMenuItem(
-            text = "سیستم",
-            selected = themeMode == AppThemeMode.System,
-            onClick = {
-                onThemeModeChange(AppThemeMode.System)
-                menuExpanded = false
-            }
-        )
-    }
-}
-
-@Composable
-private fun ThemeMenuItem(
-    text: String,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    DropdownMenuItem(
-        text = {
-            Text(
-                text = if (selected) "✓ $text" else text
-            )
+        modifier = Modifier.semantics {
+            contentDescription = "تغییر تم"
         },
-        onClick = onClick
-    )
+        onClick = {
+            onThemeModeChange(
+                when (themeMode) {
+                    AppThemeMode.Light -> AppThemeMode.Dark
+                    AppThemeMode.Dark -> AppThemeMode.Light
+                }
+            )
+        }
+    ) {
+        Text(
+            text = when (themeMode) {
+                AppThemeMode.Light -> "☀️"
+                AppThemeMode.Dark -> "🌙"
+            },
+            modifier = Modifier.graphicsLayer {
+                rotationZ = rotation
+            },
+            style = MaterialTheme.typography.titleMedium
+        )
+    }
 }

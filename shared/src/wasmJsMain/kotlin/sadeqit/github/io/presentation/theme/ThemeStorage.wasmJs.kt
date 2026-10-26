@@ -20,7 +20,6 @@ internal actual object ThemeStorage {
         return when (loadThemeValue()) {
             "light" -> AppThemeMode.Light
             "dark" -> AppThemeMode.Dark
-            "system" -> AppThemeMode.System
             else -> null
         }
     }
@@ -29,7 +28,6 @@ internal actual object ThemeStorage {
         val value = when (themeMode) {
             AppThemeMode.Light -> "light"
             AppThemeMode.Dark -> "dark"
-            AppThemeMode.System -> "system"
         }
 
         saveThemeValue(value)

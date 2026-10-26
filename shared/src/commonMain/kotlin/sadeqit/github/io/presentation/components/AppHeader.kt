@@ -1,11 +1,20 @@
 package sadeqit.github.io.presentation.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -14,7 +23,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.text.font.FontWeight
 import sadeqit.github.io.presentation.navigation.AppRoute
 import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.github.io.presentation.theme.AppThemeMode
@@ -26,24 +40,29 @@ fun AppHeader(
     themeMode: AppThemeMode,
     onThemeModeChange: (AppThemeMode) -> Unit
 ) {
-    AppWindowSize { windowSize ->
-        when (windowSize) {
-            AppWindowSize.Mobile -> {
-                MobileHeader(
-                    currentRoute = currentRoute,
-                    onNavigate = onNavigate,
-                    themeMode = themeMode,
-                    onThemeModeChange = onThemeModeChange
-                )
-            }
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        AppWindowSize { windowSize ->
+            when (windowSize) {
+                AppWindowSize.Mobile -> {
+                    MobileHeader(
+                        currentRoute = currentRoute,
+                        onNavigate = onNavigate,
+                        themeMode = themeMode,
+                        onThemeModeChange = onThemeModeChange
+                    )
+                }
 
-            AppWindowSize.Desktop -> {
-                DesktopHeader(
-                    currentRoute = currentRoute,
-                    onNavigate = onNavigate,
-                    themeMode = themeMode,
-                    onThemeModeChange = onThemeModeChange
-                )
+                AppWindowSize.Desktop -> {
+                    DesktopHeader(
+                        currentRoute = currentRoute,
+                        onNavigate = onNavigate,
+                        themeMode = themeMode,
+                        onThemeModeChange = onThemeModeChange
+                    )
+                }
             }
         }
     }
@@ -56,87 +75,152 @@ private fun MobileHeader(
     themeMode: AppThemeMode,
     onThemeModeChange: (AppThemeMode) -> Unit
 ) {
-    var menuExpanded by remember {
-        mutableStateOf(false)
+    var menuExpanded by remember { mutableStateOf(false) }
+
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = AppDimensions.ContentPadding,
+                    vertical = AppDimensions.Space12
+                ),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                MobileMenuButton(
+                    expanded = menuExpanded,
+                    onClick = {
+                        menuExpanded = !menuExpanded
+                    }
+                )
+
+                ThemeSelector(
+                    themeMode = themeMode,
+                    onThemeModeChange = onThemeModeChange
+                )
+            }
+
+            AppLogo()
+        }
+
+        AnimatedVisibility(
+            visible = menuExpanded,
+            modifier = Modifier.fillMaxWidth(),
+            enter = expandVertically() + fadeIn(),
+            exit = shrinkVertically() + fadeOut()
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(
+                        horizontal = AppDimensions.ContentPadding,
+                        vertical = AppDimensions.Space24
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    AppDimensions.Space16
+                )
+            ) {
+                MobileNavigationItem(
+                    text = "خانه",
+                    route = AppRoute.Home,
+                    currentRoute = currentRoute,
+                    onNavigate = onNavigate,
+                    onDismiss = {
+                        menuExpanded = false
+                    }
+                )
+
+                MobileNavigationItem(
+                    text = "پروژه‌ها",
+                    route = AppRoute.Projects,
+                    currentRoute = currentRoute,
+                    onNavigate = onNavigate,
+                    onDismiss = {
+                        menuExpanded = false
+                    }
+                )
+
+                MobileNavigationItem(
+                    text = "مقالات",
+                    route = AppRoute.Articles,
+                    currentRoute = currentRoute,
+                    onNavigate = onNavigate,
+                    onDismiss = {
+                        menuExpanded = false
+                    }
+                )
+
+                MobileNavigationItem(
+                    text = "رزومه",
+                    route = AppRoute.Resume,
+                    currentRoute = currentRoute,
+                    onNavigate = onNavigate,
+                    onDismiss = {
+                        menuExpanded = false
+                    }
+                )
+
+                MobileNavigationItem(
+                    text = "درباره من",
+                    route = AppRoute.About,
+                    currentRoute = currentRoute,
+                    onNavigate = onNavigate,
+                    onDismiss = {
+                        menuExpanded = false
+                    }
+                )
+
+                MobileNavigationItem(
+                    text = "تماس با من",
+                    route = AppRoute.Contact,
+                    currentRoute = currentRoute,
+                    onNavigate = onNavigate,
+                    onDismiss = {
+                        menuExpanded = false
+                    }
+                )
+            }
+        }
     }
+}
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(AppDimensions.ContentPadding),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+@Composable
+private fun MobileNavigationItem(
+    text: String,
+    route: AppRoute,
+    currentRoute: AppRoute,
+    onNavigate: (AppRoute) -> Unit,
+    onDismiss: () -> Unit
+) {
+    TextButton(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {
+            onNavigate(route)
+            onDismiss()
+        },
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = if (currentRoute == route) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            }
+        )
     ) {
-        AppLogo()
-
-        TextButton(
-            onClick = {
-                menuExpanded = true
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = if (currentRoute == route) {
+                FontWeight.Bold
+            } else {
+                FontWeight.Normal
             }
-        ) {
-            Text("☰")
-        }
-
-        DropdownMenu(
-            expanded = menuExpanded,
-            onDismissRequest = {
-                menuExpanded = false
-            }
-        ) {
-            NavigationMenuItem(
-                text = "خانه",
-                route = AppRoute.Home,
-                currentRoute = currentRoute,
-                onNavigate = onNavigate,
-                onDismiss = { menuExpanded = false }
-            )
-
-            NavigationMenuItem(
-                text = "پروژه‌ها",
-                route = AppRoute.Projects,
-                currentRoute = currentRoute,
-                onNavigate = onNavigate,
-                onDismiss = { menuExpanded = false }
-            )
-
-            NavigationMenuItem(
-                text = "مقالات",
-                route = AppRoute.Articles,
-                currentRoute = currentRoute,
-                onNavigate = onNavigate,
-                onDismiss = { menuExpanded = false }
-            )
-
-            NavigationMenuItem(
-                text = "رزومه",
-                route = AppRoute.Resume,
-                currentRoute = currentRoute,
-                onNavigate = onNavigate,
-                onDismiss = { menuExpanded = false }
-            )
-
-            NavigationMenuItem(
-                text = "درباره من",
-                route = AppRoute.About,
-                currentRoute = currentRoute,
-                onNavigate = onNavigate,
-                onDismiss = { menuExpanded = false }
-            )
-
-            NavigationMenuItem(
-                text = "تماس",
-                route = AppRoute.Contact,
-                currentRoute = currentRoute,
-                onNavigate = onNavigate,
-                onDismiss = { menuExpanded = false }
-            )
-
-            ThemeMenuSection(
-                themeMode = themeMode,
-                onThemeModeChange = onThemeModeChange,
-                onDismiss = { menuExpanded = false }
-            )
-        }
+        )
     }
 }
 
@@ -150,39 +234,30 @@ private fun DesktopHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(AppDimensions.ContentPadding),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            .padding(
+                horizontal = AppDimensions.ContentPadding,
+                vertical = AppDimensions.Space12
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AppLogo()
+        // سمت چپ: تغییر تم
+        ThemeSelector(
+            themeMode = themeMode,
+            onThemeModeChange = onThemeModeChange
+        )
 
+        // وسط: ناوبری
         Row(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            NavigationItem(
-                text = "خانه",
-                selected = currentRoute == AppRoute.Home,
-                onClick = { onNavigate(AppRoute.Home) }
-            )
 
             NavigationItem(
-                text = "پروژه‌ها",
-                selected = currentRoute == AppRoute.Projects,
-                onClick = { onNavigate(AppRoute.Projects) }
+                text = "تماس با من",
+                selected = currentRoute == AppRoute.Contact,
+                onClick = { onNavigate(AppRoute.Contact) }
             )
-
-            NavigationItem(
-                text = "مقالات",
-                selected = currentRoute == AppRoute.Articles,
-                onClick = { onNavigate(AppRoute.Articles) }
-            )
-
-            NavigationItem(
-                text = "رزومه",
-                selected = currentRoute == AppRoute.Resume,
-                onClick = { onNavigate(AppRoute.Resume) }
-            )
-
             NavigationItem(
                 text = "درباره من",
                 selected = currentRoute == AppRoute.About,
@@ -190,111 +265,93 @@ private fun DesktopHeader(
             )
 
             NavigationItem(
-                text = "تماس",
-                selected = currentRoute == AppRoute.Contact,
-                onClick = { onNavigate(AppRoute.Contact) }
+                text = "پروژه‌ها",
+                selected = currentRoute == AppRoute.Projects,
+                onClick = { onNavigate(AppRoute.Projects) }
+            )
+            NavigationItem(
+                text = "مقالات",
+                selected = currentRoute == AppRoute.Articles,
+                onClick = { onNavigate(AppRoute.Articles) }
+            )
+            NavigationItem(
+                text = "رزومه",
+                selected = currentRoute == AppRoute.Resume,
+                onClick = { onNavigate(AppRoute.Resume) }
+            )
+            NavigationItem(
+                text = "خانه",
+                selected = currentRoute == AppRoute.Home,
+                onClick = { onNavigate(AppRoute.Home) }
             )
 
-            ThemeSelector(
-                themeMode = themeMode,
-                onThemeModeChange = onThemeModeChange
-            )
         }
+        // سمت راست: نام
+        AppLogo()
     }
 }
 
+@Composable
+private fun MobileMenuButton(
+    expanded: Boolean,
+    onClick: () -> Unit
+) {
+    TextButton(
+        onClick = onClick,
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
+    ) {
+        Text(
+            text = if (expanded) "✕" else "☰",
+            style = MaterialTheme.typography.titleLarge
+        )
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun NavigationItem(
     text: String,
     selected: Boolean,
     onClick: () -> Unit
 ) {
+    var isHovered by remember { mutableStateOf(false) }
+
+    val scale by animateFloatAsState(
+        targetValue = if (isHovered) 1.12f else 1f,
+        animationSpec = tween(durationMillis = 180),
+        label = "NavigationItemScale"
+    )
+
     TextButton(
-        onClick = onClick
+        onClick = onClick,
+        modifier = Modifier
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .onPointerEvent(PointerEventType.Enter) {
+                isHovered = true
+            }
+            .onPointerEvent(PointerEventType.Exit) {
+                isHovered = false
+            },
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = if (selected) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            }
+        )
     ) {
         Text(
-            text = if (selected) "• $text" else text
+            text = text,
+            fontWeight = if (selected) {
+                FontWeight.Bold
+            } else {
+                FontWeight.Normal
+            }
         )
     }
-}
-
-@Composable
-private fun NavigationMenuItem(
-    text: String,
-    route: AppRoute,
-    currentRoute: AppRoute,
-    onNavigate: (AppRoute) -> Unit,
-    onDismiss: () -> Unit
-) {
-    DropdownMenuItem(
-        text = {
-            Text(text)
-        },
-        onClick = {
-            onNavigate(route)
-            onDismiss()
-        }
-    )
-}
-
-@Composable
-private fun ThemeMenuSection(
-    themeMode: AppThemeMode,
-    onThemeModeChange: (AppThemeMode) -> Unit,
-    onDismiss: () -> Unit
-) {
-    DropdownMenuItem(
-        text = {
-            Text("تم")
-        },
-        onClick = {}
-    )
-
-    DropdownMenuItem(
-        text = {
-            Text(
-                if (themeMode == AppThemeMode.Light) {
-                    "✓ روشن"
-                } else {
-                    "روشن"
-                }
-            )
-        },
-        onClick = {
-            onThemeModeChange(AppThemeMode.Light)
-            onDismiss()
-        }
-    )
-
-    DropdownMenuItem(
-        text = {
-            Text(
-                if (themeMode == AppThemeMode.Dark) {
-                    "✓ تیره"
-                } else {
-                    "تیره"
-                }
-            )
-        },
-        onClick = {
-            onThemeModeChange(AppThemeMode.Dark)
-            onDismiss()
-        }
-    )
-
-    DropdownMenuItem(
-        text = {
-            Text(
-                if (themeMode == AppThemeMode.System) {
-                    "✓ سیستم"
-                } else {
-                    "سیستم"
-                }
-            )
-        },
-        onClick = {
-            onThemeModeChange(AppThemeMode.System)
-            onDismiss()
-        }
-    )
 }
