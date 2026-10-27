@@ -30,7 +30,20 @@ fun AppNavigation(
         onThemeModeChange = onThemeModeChange
     ) {
         when (currentRoute) {
-            AppRoute.Home -> HomeScreen()
+            AppRoute.Home -> HomeScreen(
+                onProjectsClick = {
+                    currentRoute = AppRoute.Projects
+                },
+                onArticlesClick = {
+                    currentRoute = AppRoute.Articles
+                },
+                onAboutClick = {
+                    currentRoute = AppRoute.About
+                },
+                onContactClick = {
+                    currentRoute = AppRoute.Contact
+                }
+            )
             AppRoute.Projects -> ProjectsScreen()
             AppRoute.Articles -> ArticlesScreen()
             AppRoute.Resume -> ResumeScreen()

@@ -7,7 +7,9 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import sadeqit.github.io.presentation.navigation.AppRoute
 import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.github.io.presentation.theme.AppThemeMode
@@ -83,7 +86,7 @@ private fun MobileHeader(
                 .fillMaxWidth()
                 .padding(
                     horizontal = AppDimensions.ContentPadding,
-                    vertical = AppDimensions.Space12
+
                 ),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -236,7 +239,7 @@ private fun DesktopHeader(
             .fillMaxWidth()
             .padding(
                 horizontal = AppDimensions.ContentPadding,
-                vertical = AppDimensions.Space12
+                vertical = AppDimensions.Space8
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -296,15 +299,16 @@ private fun MobileMenuButton(
     expanded: Boolean,
     onClick: () -> Unit
 ) {
-    TextButton(
-        onClick = onClick,
-        colors = ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
+    Box(
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .padding(horizontal = 8.dp, vertical = 4.dp),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = if (expanded) "✕" else "☰",
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }

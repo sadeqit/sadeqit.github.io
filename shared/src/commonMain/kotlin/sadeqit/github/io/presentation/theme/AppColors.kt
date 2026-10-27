@@ -12,7 +12,7 @@ internal object AppColors {
     val LightAccent = Color(0xFF10B981)
 
     val LightBackground = Color(0xFFFFFFFF)
-    val LightSurface = Color(0xFFF8FAFC)
+    val LightSurface = Color(0xFFF1F4F6)
     val LightSurfaceElevated = Color(0xFFFFFFFF)
 
     val LightTextPrimary = Color(0xFF0F172A)
@@ -33,7 +33,7 @@ internal object AppColors {
     val DarkAccent = Color(0xFF34D399)
 
     val DarkBackground = Color(0xFF0B1120)
-    val DarkSurface = Color(0xFF111827)
+    val DarkSurface = Color(0xFF1E263D)
     val DarkSurfaceElevated = Color(0xFF172033)
 
     val DarkTextPrimary = Color(0xFFF8FAFC)
