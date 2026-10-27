@@ -2,17 +2,23 @@ package sadeqit.github.io.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -24,13 +30,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import sadeqit.github.io.presentation.theme.AppBreakpoints
 import sadeqit.github.io.presentation.theme.AppDimensions
 
@@ -65,10 +74,7 @@ fun HomeScreen(
 
             HomeSectionDivider()
 
-            HomeProjects(
-                isMobile = isMobile,
-                onProjectsClick = onProjectsClick
-            )
+            HomeProjects(onProjectsClick = onProjectsClick)
 
             HomeSectionDivider()
 
@@ -76,10 +82,7 @@ fun HomeScreen(
 
             HomeSectionDivider()
 
-            HomeArticles(
-                isMobile = isMobile,
-                onArticlesClick = onArticlesClick
-            )
+            HomeArticles(onArticlesClick = onArticlesClick)
 
             HomeSectionDivider()
 
@@ -340,9 +343,7 @@ private fun CodeLine(
 @Composable
 private fun HomeSectionDivider() {
     HorizontalDivider(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = AppDimensions.ContentPadding),
+        modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.outlineVariant
     )
 }
@@ -355,7 +356,7 @@ private fun HomeContainer(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = AppDimensions.ContentPadding),
+            .padding(horizontal = AppDimensions.Space16),
         contentAlignment = Alignment.Center
     ) {
         Box(
@@ -420,7 +421,13 @@ private fun HomeAbout(
     onAboutClick: () -> Unit,
 ) {
     HomeContainer(
-        modifier = Modifier.padding(vertical = AppDimensions.Space80)
+        modifier = Modifier.padding(
+            vertical = if (isMobile) {
+                AppDimensions.Space48
+            } else {
+                AppDimensions.Space48
+            }
+        )
     ) {
         if (isMobile) {
             Column(
@@ -478,11 +485,12 @@ private fun HomeAbout(
 
 @Composable
 private fun HomeProjects(
-    isMobile: Boolean,
     onProjectsClick: () -> Unit,
 ) {
     HomeContainer(
-        modifier = Modifier.padding(vertical = AppDimensions.Space80)
+        modifier = Modifier.padding(
+            vertical = AppDimensions.Space48
+        )
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(AppDimensions.Space40)
@@ -493,54 +501,30 @@ private fun HomeProjects(
                 description = "نمونه‌ای از محصولاتی که با تمرکز روی تجربه کاربری، معماری و کیفیت ساخته شده‌اند."
             )
 
-            if (isMobile) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
-                ) {
-                    ProjectCard(
-                        title = "Weatherino",
-                        description = "اپلیکیشن هواشناسی مولتی‌پلتفرم با Kotlin Multiplatform و Compose.",
-                        tags = listOf("KMP", "Compose", "Ktor")
-                    )
+            HorizontalCardRow {
+                ProjectCard(
+                    modifier = Modifier.width(280.dp),
+                    title = "Weatherino",
+                    description = "اپلیکیشن هواشناسی مولتی‌پلتفرم با Kotlin Multiplatform و Compose.",
+                    tags = listOf("KMP", "Compose", "Ktor"),
+                    onClick = onProjectsClick
+                )
 
-                    ProjectCard(
-                        title = "تعبیر خواب صادق",
-                        description = "اپلیکیشن اندرویدی با تمرکز روی تجربه کاربری ساده و سریع.",
-                        tags = listOf("Android", "Kotlin", "Compose")
-                    )
+                ProjectCard(
+                    modifier = Modifier.width(280.dp),
+                    title = "تعبیر خواب صادق",
+                    description = "اپلیکیشن اندرویدی با تمرکز روی تجربه کاربری ساده و سریع.",
+                    tags = listOf("Android", "Kotlin", "Compose"),
+                    onClick = onProjectsClick
+                )
 
-                    ProjectCard(
-                        title = "Sadgh IT",
-                        description = "وب‌سایت شخصی و حرفه‌ای برای معرفی تجربه، پروژه‌ها و مهارت‌ها.",
-                        tags = listOf("Kotlin", "Wasm", "Compose")
-                    )
-                }
-            } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
-                ) {
-                    ProjectCard(
-                        modifier = Modifier.weight(1f),
-                        title = "Weatherino",
-                        description = "اپلیکیشن هواشناسی مولتی‌پلتفرم با Kotlin Multiplatform و Compose.",
-                        tags = listOf("KMP", "Compose", "Ktor")
-                    )
-
-                    ProjectCard(
-                        modifier = Modifier.weight(1f),
-                        title = "تعبیر خواب صادق",
-                        description = "اپلیکیشن اندرویدی با تمرکز روی تجربه کاربری ساده و سریع.",
-                        tags = listOf("Android", "Kotlin", "Compose")
-                    )
-
-                    ProjectCard(
-                        modifier = Modifier.weight(1f),
-                        title = "Sadgh IT",
-                        description = "وب‌ سایت شخصی و حرفه‌ای برای معرفی تجربه، پروژه‌ها و مهارت‌ها.",
-                        tags = listOf("Kotlin", "Wasm", "Compose")
-                    )
-                }
+                ProjectCard(
+                    modifier = Modifier.width(280.dp),
+                    title = "Sadeq IT",
+                    description = "وب‌سایت شخصی و حرفه‌ای برای معرفی تجربه، پروژه‌ها و مهارت‌ها.",
+                    tags = listOf("Kotlin", "Wasm", "Compose"),
+                    onClick = onProjectsClick
+                )
             }
 
             OutlinedButton(
@@ -554,14 +538,17 @@ private fun HomeProjects(
     }
 }
 
+
 @Composable
 private fun ProjectCard(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
     tags: List<String>,
+    onClick: () -> Unit,
 ) {
     Card(
+        onClick = onClick,
         modifier = modifier,
         shape = RoundedCornerShape(AppDimensions.Space16),
         colors = CardDefaults.cardColors(
@@ -615,6 +602,31 @@ private fun ProjectCard(
     }
 }
 
+@Composable
+private fun HorizontalCardRow(
+    content: @Composable RowScope.() -> Unit,
+) {
+    val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(scrollState)
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures(
+                    onHorizontalDrag = { change, dragAmount ->
+                        change.consume()
+                        scope.launch {
+                            scrollState.scrollBy(dragAmount)
+                        }
+                    }
+                )
+            },
+        horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space16),
+        content = content
+    )
+}
 /* -------------------------------------------------------------------------- */
 /* Skills                                                                     */
 /* -------------------------------------------------------------------------- */
@@ -624,7 +636,13 @@ private fun HomeSkills(
     isMobile: Boolean,
 ) {
     HomeContainer(
-        modifier = Modifier.padding(vertical = AppDimensions.Space80)
+        modifier = Modifier.padding(
+            vertical = if (isMobile) {
+                AppDimensions.Space48
+            } else {
+                AppDimensions.Space48
+            }
+        )
     ) {
         if (isMobile) {
             Column(
@@ -721,11 +739,12 @@ private fun SkillChip(
 
 @Composable
 private fun HomeArticles(
-    isMobile: Boolean,
     onArticlesClick: () -> Unit,
 ) {
     HomeContainer(
-        modifier = Modifier.padding(vertical = AppDimensions.Space80)
+        modifier = Modifier.padding(
+            vertical = AppDimensions.Space48
+        )
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(AppDimensions.Space40)
@@ -736,50 +755,29 @@ private fun HomeArticles(
                 description = "مقالاتی درباره Kotlin، Android، Compose، معماری و تجربه توسعه نرم‌افزار."
             )
 
-            if (isMobile) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
-                ) {
-                    ArticleCard(
-                        category = "KOTLIN",
-                        title = "چرا Clean Code فقط تمیز نوشتن کد نیست؟"
-                    )
+            HorizontalCardRow {
 
-                    ArticleCard(
-                        category = "ANDROID",
-                        title = "ساختار پروژه‌های قابل نگهداری در Android"
-                    )
+                ArticleCard(
+                    modifier = Modifier.width(280.dp),
+                    category = "KOTLIN",
+                    title = "چرا Clean Code فقط تمیز نوشتن کد نیست؟",
+                    onClick = onArticlesClick
+                )
 
-                    ArticleCard(
-                        category = "COMPOSE",
-                        title = "اصول طراحی UI قابل توسعه با Compose"
-                    )
-                }
-            } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
-                ) {
-                    ArticleCard(
-                        modifier = Modifier.weight(1f),
-                        category = "KOTLIN",
-                        title = "چرا Clean Code فقط تمیز نوشتن کد نیست؟"
-                    )
+                ArticleCard(
+                    modifier = Modifier.width(280.dp),
+                    category = "ANDROID",
+                    title = "ساختار پروژه‌های قابل نگهداری در Android",
+                    onClick = onArticlesClick
+                )
 
-                    ArticleCard(
-                        modifier = Modifier.weight(1f),
-                        category = "ANDROID",
-                        title = "ساختار پروژه‌های قابل نگهداری در Android"
-                    )
-
-                    ArticleCard(
-                        modifier = Modifier.weight(1f),
-                        category = "COMPOSE",
-                        title = "اصول طراحی UI قابل توسعه با Compose"
-                    )
-                }
+                ArticleCard(
+                    modifier = Modifier.width(280.dp),
+                    category = "COMPOSE",
+                    title = "اصول طراحی UI قابل توسعه با Compose",
+                    onClick = onArticlesClick
+                )
             }
-
             OutlinedButton(
                 onClick = onArticlesClick,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -796,8 +794,10 @@ private fun ArticleCard(
     modifier: Modifier = Modifier,
     category: String,
     title: String,
+    onClick: () -> Unit,
 ) {
     Card(
+        onClick = onClick,
         modifier = modifier,
         shape = RoundedCornerShape(AppDimensions.Space16),
         colors = CardDefaults.cardColors(
@@ -834,12 +834,54 @@ private fun ArticleCard(
 /* Approach                                                                   */
 /* -------------------------------------------------------------------------- */
 
+private data class ApproachItem(
+    val title: String,
+    val description: String,
+)
+
+private val approachItems = listOf(
+    ApproachItem(
+        title = "Problem Solving",
+        description = "درک دقیق مسئله و نیازهای محصول پیش از پیاده‌سازی؛ تحلیل ریشه‌ای چالش‌ها و تبدیل آن‌ها به راهکارهای فنی مؤثر و قابل اجرا."
+    ),
+    ApproachItem(
+        title = "Architecture",
+        description = "طراحی ساختاری ماژولار با مرزبندی شفاف مسئولیت‌ها و مدیریت صحیح وابستگی‌ها، با تمرکز بر توسعه‌پذیری، تست‌پذیری و نگهداری بلندمدت."
+    ),
+    ApproachItem(
+        title = "Clean Code",
+        description = "نوشتن کدی خوانا، ساده و قابل فهم با مسئولیت‌های مشخص، نام‌گذاری معنادار و حداقل پیچیدگی؛ کدی که تیم بتواند با اطمینان توسعه دهد."
+    ),
+    ApproachItem(
+        title = "SOLID Principles",
+        description = "به‌کارگیری عملی اصول SOLID برای کاهش وابستگی، افزایش انعطاف‌پذیری و ایجاد ساختاری که در برابر تغییرات محصول مقاوم باشد."
+    ),
+    ApproachItem(
+        title = "Design Patterns",
+        description = "انتخاب آگاهانه الگوهای طراحی متناسب با مسئله، تنها زمانی که ارزش واقعی ایجاد کنند؛ بدون تحمیل پیچیدگی و انتزاع غیرضروری."
+    ),
+    ApproachItem(
+        title = "Testing & Quality",
+        description = "طراحی کد تست‌پذیر و توجه به تست، مدیریت خطا، بازبینی کد و کنترل کیفیت، برای کاهش هزینه نگهداری و افزایش اطمینان‌پذیری نرم‌افزار."
+    ),
+    ApproachItem(
+        title = "User-Centered Development",
+        description = "تبدیل نیازهای واقعی کاربر به تجربه‌ای ساده و کاربردی؛ در نظر گرفتن UX و رفتار مخاطب هدف به‌عنوان بخشی از تصمیم‌گیری فنی."
+    ),
+    ApproachItem(
+        title = "Scalability & Maintainability",
+        description = "طراحی با نگاه بلندمدت؛ به‌گونه‌ای که محصول با رشد قابلیت‌ها و پیچیدگی، بدون افزایش کنترل‌نشده بدهی فنی، پایدار و گسترش‌پذیر بماند."
+    ),
+)
+
 @Composable
 private fun HomeApproach(
     isMobile: Boolean,
 ) {
     HomeContainer(
-        modifier = Modifier.padding(vertical = AppDimensions.Space80)
+        modifier = Modifier.padding(
+            vertical = AppDimensions.Space48
+        )
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(AppDimensions.Space40)
@@ -850,54 +892,39 @@ private fun HomeApproach(
                 description = "هدف فقط تحویل کد نیست؛ هدف ساخت چیزی است که بتواند رشد کند."
             )
 
-            if (isMobile) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Space12)
-                ) {
-                    ApproachCard(
-                        number = "01",
-                        title = "Understand",
-                        description = "درک مسئله و نیاز واقعی محصول"
-                    )
-
-                    ApproachCard(
-                        number = "02",
-                        title = "Design",
-                        description = "انتخاب معماری و طراحی قابل توسعه"
-                    )
-
-                    ApproachCard(
-                        number = "03",
-                        title = "Build",
-                        description = "پیاده‌سازی تمیز و قابل نگهداری"
-                    )
-                }
+            val columns = if (isMobile) 2 else 4
+            val spacing = if (isMobile) {
+                AppDimensions.Space12
             } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
-                ) {
-                    ApproachCard(
-                        modifier = Modifier.weight(1f),
-                        number = "01",
-                        title = "Understand",
-                        description = "درک مسئله و نیاز واقعی محصول"
-                    )
+                AppDimensions.Space16
+            }
 
-                    ApproachCard(
-                        modifier = Modifier.weight(1f),
-                        number = "02",
-                        title = "Design",
-                        description = "انتخاب معماری و طراحی قابل توسعه"
-                    )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(spacing)
+            ) {
+                approachItems
+                    .chunked(columns)
+                    .forEachIndexed { rowIndex, rowItems ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(spacing)
+                        ) {
+                            rowItems.forEachIndexed { columnIndex, item ->
+                                ApproachCard(
+                                    modifier = Modifier.weight(1f),
+                                    number = (rowIndex * columns + columnIndex + 1)
+                                        .toString()
+                                        .padStart(2, '0'),
+                                    title = item.title,
+                                    description = item.description
+                                )
+                            }
 
-                    ApproachCard(
-                        modifier = Modifier.weight(1f),
-                        number = "03",
-                        title = "Build",
-                        description = "پیاده‌سازی تمیز و قابل نگهداری"
-                    )
-                }
+                            repeat(columns - rowItems.size) {
+                                Spacer(modifier = Modifier.weight(1f))
+                            }
+                        }
+                    }
             }
         }
     }
@@ -930,6 +957,7 @@ private fun ApproachCard(
 
             Text(
                 text = title,
+
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -954,8 +982,8 @@ private fun HomeContact(
 ) {
     HomeContainer(
         modifier = Modifier.padding(
-            top = AppDimensions.Space80,
-            bottom = AppDimensions.Space96
+            top = if (isMobile) AppDimensions.Space48 else AppDimensions.Space48,
+            bottom = if (isMobile) AppDimensions.Space48 else AppDimensions.Space48
         )
     ) {
         Card(
@@ -980,7 +1008,7 @@ private fun HomeContact(
                 verticalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
             ) {
                 Text(
-                    text = "بیایید چیزی ارزشمند بسازیم.",
+                    text = "پروژه ای در ذهن دارید؟",
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold,
@@ -988,8 +1016,7 @@ private fun HomeContact(
                 )
 
                 Text(
-                    text = "اگر روی یک محصول جدید کار می‌کنید یا به یک توسعه‌دهنده Kotlin نیاز دارید، " +
-                            "خوشحال می‌شوم صحبت کنیم.",
+                    text = "از یک ایده اولیه تا محصولی آماده رشد — کنار شما هستیم تا مسیر فنی را با اطمینان طی کنید.",
                     modifier = Modifier.widthIn(max = 680.dp),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

@@ -42,7 +42,7 @@ fun AppFooter() {
                 )
 
                 Text(
-                    text = "Compose Multiplatform و Kotlin ساخته شده با",
+                    text = "KMP ساخته شده با",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
