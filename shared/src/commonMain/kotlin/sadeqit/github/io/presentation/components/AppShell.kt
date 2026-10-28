@@ -51,12 +51,7 @@ fun AppShell(
                         .verticalScroll(rememberScrollState())
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .widthIn(max = AppDimensions.ContentMaxWidth)
-                            .padding(
-                                horizontal = AppDimensions.ContentPadding
-                            )
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         CompositionLocalProvider(
                             LocalLayoutDirection provides LayoutDirection.Rtl
