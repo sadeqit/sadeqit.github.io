@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -27,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -36,9 +36,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.LayoutDirection
 import kotlinx.coroutines.delay
 import sadeqit.github.io.presentation.theme.AppDimensions
 import kotlin.time.Duration.Companion.milliseconds
@@ -147,19 +148,7 @@ private fun HeroText(
         )
     ) {
         Text(
-            text = "ANDROID & KOTLIN DEVELOPER",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold,
-            textAlign = if (centered) {
-                TextAlign.Center
-            } else {
-                TextAlign.Start
-            }
-        )
-
-        Text(
-            text = "نرم‌افزارهایی می‌سازم\nکه برای ماندن ساخته شده‌اند.",
+            text = "سلام من صادق هستم؛\nبرنامه نویس اندروید",
             style = if (centered) {
                 MaterialTheme.typography.headlineLarge
             } else {
@@ -175,9 +164,8 @@ private fun HeroText(
         )
 
         Text(
-            text = "توسعه‌دهنده نرم‌افزار با تمرکز بر Kotlin، Android و Compose؛ " +
-                    "با تمرکز بر ساخت محصولاتی مدرن، قابل اعتماد و قابل توسعه.",
-            modifier = Modifier.widthIn(max = 620.dp),
+            text = "توسعه دهنده نرم افزارهای اندرویدی با Kotlin و Jetpack Compose؛\n" +
+                    "فعال در حوزه توسعه نرم افزارهای چندسکویی با Kotlin Multiplatform.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = if (centered) {
@@ -329,64 +317,66 @@ private fun AnimatedCodeBlock(
         label = "heroCodeCursorAlpha"
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(
-                RoundedCornerShape(
-                    AppDimensions.Space16
-                )
-            )
-            .background(
-                MaterialTheme.colorScheme.surfaceVariant
-            )
-            .padding(AppDimensions.Space20),
-        verticalArrangement = Arrangement.spacedBy(
-            AppDimensions.Space8
-        )
+    CompositionLocalProvider(
+        LocalLayoutDirection provides LayoutDirection.Ltr
     ) {
-        var currentIndex = 0
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(
+                    RoundedCornerShape(AppDimensions.Space16)
+                )
+                .background(
+                    MaterialTheme.colorScheme.surfaceVariant
+                )
+                .padding(AppDimensions.Space20),
+            verticalArrangement = Arrangement.spacedBy(
+                AppDimensions.Space8
+            )
+        ) {
+            var currentIndex = 0
 
-        heroCodeLines.forEachIndexed { index, (first, second) ->
-            val lineLength = first.length + second.length
+            heroCodeLines.forEachIndexed { index, (first, second) ->
+                val lineLength = first.length + second.length
 
-            val visibleCharacters = (
-                    typedCharacters - currentIndex
-                    ).coerceIn(
-                    minimumValue = 0,
-                    maximumValue = lineLength
+                val visibleCharacters = (
+                        typedCharacters - currentIndex
+                        ).coerceIn(
+                        minimumValue = 0,
+                        maximumValue = lineLength
+                    )
+
+                val visibleFirstCharacters = visibleCharacters
+                    .coerceAtMost(first.length)
+
+                val visibleSecondCharacters = (
+                        visibleCharacters - first.length
+                        ).coerceAtLeast(0)
+
+                val visibleFirst = first.take(
+                    visibleFirstCharacters
                 )
 
-            val visibleFirstCharacters = visibleCharacters
-                .coerceAtMost(first.length)
+                val visibleSecond = second.take(
+                    visibleSecondCharacters
+                )
 
-            val visibleSecondCharacters = (
-                    visibleCharacters - first.length
-                    ).coerceAtLeast(0)
+                val cursorPosition = typedCharacters - currentIndex
 
-            val visibleFirst = first.take(
-                visibleFirstCharacters
-            )
+                val showCursor = cursorPosition in 0..lineLength
 
-            val visibleSecond = second.take(
-                visibleSecondCharacters
-            )
+                CodeLine(
+                    first = visibleFirst,
+                    second = visibleSecond,
+                    showCursor = showCursor,
+                    cursorAlpha = cursorAlpha
+                )
 
-            val cursorPosition = typedCharacters - currentIndex
+                currentIndex += lineLength
 
-            val showCursor = cursorPosition in 0..lineLength
-
-            CodeLine(
-                first = visibleFirst,
-                second = visibleSecond,
-                showCursor = showCursor,
-                cursorAlpha = cursorAlpha
-            )
-
-            currentIndex += lineLength
-
-            if (index < heroCodeLines.lastIndex) {
-                currentIndex += 1
+                if (index < heroCodeLines.lastIndex) {
+                    currentIndex += 1
+                }
             }
         }
     }

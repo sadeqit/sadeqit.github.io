@@ -32,17 +32,14 @@ fun HomeArticles(
         ) {
             HomeReveal {
                 SectionHeader(
-                    eyebrow = "RECENT ARTICLES",
-                    title = "از چیزهایی که یاد می‌گیرم می‌نویسم",
-                    description = "مقالاتی درباره Kotlin، Android، Compose، معماری و تجربه توسعه نرم‌افزار."
+                    eyebrow = "ARTICLES",
+                    title = "آنچه یاد می‌ گیرم، می‌ نویسم",
+                    description = "نوشته‌ هایی از تجربه‌ ها و آموخته‌ ها — درباره موضوعاتی که ارزش یادگیری و به اشتراک گذاشتن دارند."
                 )
             }
 
             HorizontalCardRow {
-                HomeRevealItem(
-                    index = 0,
-                    isMobile = false
-                ) {
+                HomeReveal {
                     ArticleCard(
                         modifier = Modifier.width(280.dp),
                         category = "KOTLIN",
@@ -51,10 +48,7 @@ fun HomeArticles(
                     )
                 }
 
-                HomeRevealItem(
-                    index = 1,
-                    isMobile = false
-                ) {
+                HomeReveal {
                     ArticleCard(
                         modifier = Modifier.width(280.dp),
                         category = "ANDROID",
@@ -63,10 +57,7 @@ fun HomeArticles(
                     )
                 }
 
-                HomeRevealItem(
-                    index = 2,
-                    isMobile = false
-                ) {
+                HomeReveal {
                     ArticleCard(
                         modifier = Modifier.width(280.dp),
                         category = "COMPOSE",

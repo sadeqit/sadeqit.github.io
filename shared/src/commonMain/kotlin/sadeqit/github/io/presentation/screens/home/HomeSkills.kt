@@ -36,8 +36,8 @@ fun HomeSkills(
             HomeReveal {
                 SectionHeader(
                     eyebrow = "TECH STACK",
-                    title = "ابزارهایی که با آن‌ها کار می‌کنم",
-                    description = "تمرکز اصلی من روی Kotlin، Android و اکوسیستم مدرن توسعه نرم‌افزار است."
+                    title = "تکنولوژی هایی که با آن ها کار می کنم",
+                    description = "مجموعه ای از ابزارهایی که در ساخت و توسعه پروژه‌هایم استفاده می‌ کنم."
                 )
             }
 
@@ -53,15 +53,15 @@ private fun SkillsContent(
     isMobile: Boolean,
 ) {
     val skills = listOf(
-        "Language & Concurrency" to "Kotlin · Coroutines · Flow · Kotlin Serialization",
-        "Android" to "Android SDK · Jetpack Compose · Material 3 · Navigation Compose",
-        "Multiplatform" to "Kotlin Multiplatform · Compose Multiplatform · Kotlin/Wasm",
-        "Architecture" to "MVVM · Clean Architecture · SOLID · Design Patterns · Clean Code",
-        "Networking" to "Ktor · Retrofit · REST APIs",
-        "Data" to "Room · SQLDelight · DataStore",
-        "Dependency Injection" to "Dagger Hilt · Koin",
-        "UI/UX" to "Material Design · RTL · Light/Dark Theme · Persian UI",
-        "Tools" to "Git · GitHub · Git Flow · GitHub Actions"
+        "Language & Concurrency" to "Kotlin • Coroutines • Flow • Kotlin Serialization",
+        "Android" to "Android SDK • Jetpack Compose • Material 3 • Navigation Compose",
+        "Multiplatform" to "Kotlin Multiplatform • Compose Multiplatform • Kotlin/Wasm",
+        "Architecture" to "MVVM • Clean Architecture • SOLID • Design Patterns • Clean Code",
+        "Networking" to "Ktor • Retrofit • REST APIs",
+        "Data" to "Room • DataStore • SQLDelight",
+        "Dependency Injection" to "Dagger Hilt • Koin",
+        "UI/UX" to "Material Design • Responsive Design • Light/Dark Theme • Animation & Motion",
+        "Tools" to "Git • GitHub • Git Flow • CI-CD"
     )
 
     Column(
@@ -95,50 +95,6 @@ private fun SkillsContent(
         }
     }
 }
-/*
-@Composable
-private fun SkillsContent(
-    isMobile: Boolean,
-) {
-    val skills = listOf(
-        "Language" to "Kotlin · Coroutines · Flow · Kotlin Serialization",
-        "Android" to "Android SDK · Jetpack Compose · Material 3 · Navigation Compose",
-        "Multiplatform" to "Kotlin Multiplatform · Compose Multiplatform · Kotlin/Wasm",
-        "Architecture" to "MVVM · Clean Architecture · SOLID · Design Patterns · Clean Code",
-        "Networking" to "Ktor · Retrofit · REST APIs · Supabase",
-        "Data" to "Room · SQLDelight · DataStore · SharedPreferences",
-        "Dependency Injection" to "Dagger Hilt · Koin",
-        "UI/UX" to "Material Design · RTL · Light/Dark Theme · Persian UI",
-        "Testing & Quality" to "Unit Testing · Debugging · Performance Optimization",
-        "Tools" to "Git · GitHub · Git Flow · Gradle · GitHub Actions"
-    )
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(AppDimensions.Space12)
-    ) {
-        skills.chunked(if (isMobile) 1 else 2).forEach { row ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space12)
-            ) {
-                row.forEach { (title, items) ->
-                    HomeReveal {
-                        SkillGroup(
-                            modifier = Modifier.weight(1f),
-                            title = title,
-                            items = items
-                        )
-                    }
-                }
-
-                if (row.size == 1 && !isMobile) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-            }
-        }
-    }
-}
-*/
 
 @Composable
 private fun SkillGroup(

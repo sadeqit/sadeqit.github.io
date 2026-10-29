@@ -33,7 +33,6 @@ fun HomeProjects(
     onProjectsClick: () -> Unit,
 ) {
 
-
     HomeContainer(
         modifier = Modifier.padding(
             vertical = AppDimensions.Space48
@@ -48,16 +47,12 @@ fun HomeProjects(
                 SectionHeader(
                     eyebrow = "SELECTED PROJECTS",
                     title = "پروژه‌های منتخب",
-                    description = "نمونه‌ای از محصولاتی که با تمرکز روی تجربه کاربری، معماری و کیفیت ساخته شده‌اند."
+                    description = "از ایده تا انتشار — پروژه هایی که با هدف ساخت تجربه ای کاربردی و قابل اعتماد شکل گرفته اند."
                 )
             }
 
             HorizontalCardRow{
-                HomeRevealItem(
-                    index = 0,
-                    isMobile = false,
-
-                ) {
+                HomeReveal {
                     ProjectCard(
                         modifier = Modifier.width(280.dp),
                         title = "Weatherino",
@@ -67,11 +62,7 @@ fun HomeProjects(
                     )
                 }
 
-                HomeRevealItem(
-                    index = 1,
-                    isMobile = false,
-
-                ) {
+                HomeReveal {
                     ProjectCard(
                         modifier = Modifier.width(280.dp),
                         title = "تعبیر خواب صادق",
@@ -81,15 +72,11 @@ fun HomeProjects(
                     )
                 }
 
-                HomeRevealItem(
-                    index = 2,
-                    isMobile = false,
-
-                ) {
+                HomeReveal {
                     ProjectCard(
                         modifier = Modifier.width(280.dp),
                         title = "SADEGH IT",
-                        description = "وب‌سایت شخصی و حرفه‌ای برای معرفی تجربه، پروژه‌ها و مهارت‌ها.",
+                        description = "وب‌ سایت شخصی و حرفه‌ای برای معرفی تجربه، پروژه‌ها و مهارت‌ها.",
                         tags = listOf("Kotlin", "Wasm", "Compose"),
                         onClick = onProjectsClick
                     )

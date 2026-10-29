@@ -26,7 +26,7 @@ private data class ApproachItem(
 private val approachItems = listOf(
     ApproachItem(
         title = "Problem Solving",
-        description = "درک دقیق مسئله و نیازهای محصول پیش از پیاده‌سازی؛ تحلیل ریشه‌ای چالش‌ها و تبدیل آن‌ها به راهکارهای فنی مؤثر و قابل اجرا."
+        description = "درک دقیق مسئله و نیازهای محصول پیش از پیاده‌سازی؛ تحلیل ریشه‌ای چالش‌ها و تبدیل آن‌ها به راهکارهای فنی مؤثر و اجراپذیر."
     ),
     ApproachItem(
         title = "Architecture",
@@ -34,7 +34,7 @@ private val approachItems = listOf(
     ),
     ApproachItem(
         title = "Clean Code",
-        description = "نوشتن کدی خوانا، ساده و قابل فهم با مسئولیت‌های مشخص، نام‌گذاری معنادار و حداقل پیچیدگی؛ کدی که تیم بتواند با اطمینان توسعه دهد."
+        description = "نوشتن کدی خوانا، ساده و قابل فهم با مسئولیت‌های مشخص، نام‌گذاری معنادار و حداقل پیچیدگی؛ کدی که بتوان با اطمینان توسعه و نگهداری کرد."
     ),
     ApproachItem(
         title = "SOLID Principles",
@@ -54,10 +54,9 @@ private val approachItems = listOf(
     ),
     ApproachItem(
         title = "Scalability & Maintainability",
-        description = "طراحی با نگاه بلندمدت؛ به‌گونه‌ای که محصول با رشد قابلیت‌ها و پیچیدگی، بدون افزایش کنترل‌نشده بدهی فنی، پایدار و گسترش‌پذیر بماند."
+        description = "طراحی با نگاه بلندمدت؛ به‌ گونه‌ای که محصول با رشد قابلیت‌ ها و پیچیدگی، پایدار و گسترش‌ پذیر بماند."
     ),
 )
-
 @Composable
 fun HomeApproach(
     isMobile: Boolean,
@@ -73,8 +72,8 @@ fun HomeApproach(
             HomeReveal {
                 SectionHeader(
                     eyebrow = "HOW I WORK",
-                    title = "کدنویسی با نگاه محصول",
-                    description = "هدف فقط تحویل کد نیست؛ هدف ساخت چیزی است که بتواند رشد کند."
+                    title = "اصولی که در توسعه نرم‌افزار دنبال می‌ کنم",
+                    description = "از تحلیل مسئله و طراحی معماری تا کیفیت کد و تجربه کاربر — هر تصمیم فنی با هدف ساخت محصولی ساده، پایدار و قابل توسعه گرفته می‌ شود."
                 )
             }
 

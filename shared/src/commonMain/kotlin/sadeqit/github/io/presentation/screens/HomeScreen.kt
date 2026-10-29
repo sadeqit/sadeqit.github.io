@@ -1,8 +1,8 @@
 package sadeqit.github.io.presentation.screens
 
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -24,49 +24,82 @@ fun HomeScreen(
     onContactClick: () -> Unit,
 ) {
     BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
     ) {
         val isMobile = maxWidth < AppBreakpoints.Mobile
 
-        Column(
-            modifier = Modifier.fillMaxWidth()
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
         ) {
-            HomeHero(
-                isMobile = isMobile,
-                onProjectsClick = onProjectsClick,
-                onContactClick = onContactClick
-            )
+            item {
+                HomeHero(
+                    isMobile = isMobile,
+                    onProjectsClick = onProjectsClick,
+                    onContactClick = onContactClick
+                )
+            }
 
-            HomeSectionDivider()
+            item {
+                HomeSectionDivider()
+            }
 
-            HomeAbout(
-                isMobile = isMobile,
-                onAboutClick = onAboutClick
-            )
+            item {
+                HomeAbout(
+                    isMobile = isMobile,
+                    onAboutClick = onAboutClick
+                )
+            }
 
-            HomeSectionDivider()
+            item {
+                HomeSectionDivider()
+            }
 
-            HomeProjects(onProjectsClick = onProjectsClick)
+            item {
+                HomeProjects(
+                    onProjectsClick = onProjectsClick
+                )
+            }
 
-            HomeSectionDivider()
+            item {
+                HomeSectionDivider()
+            }
 
-            HomeSkills(isMobile = isMobile)
+            item {
+                HomeSkills(
+                    isMobile = isMobile
+                )
+            }
 
-            HomeSectionDivider()
+            item {
+                HomeSectionDivider()
+            }
 
-            HomeArticles(onArticlesClick = onArticlesClick)
+            item {
+                HomeApproach(
+                    isMobile = isMobile
+                )
+            }
 
-            HomeSectionDivider()
+            item {
+                HomeSectionDivider()
+            }
 
-            HomeApproach(isMobile = isMobile)
+            item {
+                HomeArticles(
+                    onArticlesClick = onArticlesClick
+                )
+            }
 
-            HomeSectionDivider()
+            item {
+                HomeSectionDivider()
+            }
 
-            HomeContact(
-                isMobile = isMobile,
-                onContactClick = onContactClick
-            )
+            item {
+                HomeContact(
+                    isMobile = isMobile,
+                    onContactClick = onContactClick
+                )
+            }
         }
     }
 }

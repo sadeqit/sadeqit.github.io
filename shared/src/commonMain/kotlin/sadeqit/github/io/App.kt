@@ -14,7 +14,7 @@ import sadeqit.github.io.presentation.theme.ThemeStorage
 fun App() {
     var themeMode by remember {
         mutableStateOf(
-            ThemeStorage.load() ?: AppThemeMode.Light
+            ThemeStorage.load() ?: AppThemeMode.Dark
         )
     }
 

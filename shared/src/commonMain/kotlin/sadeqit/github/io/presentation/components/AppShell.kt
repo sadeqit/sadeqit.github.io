@@ -39,34 +39,19 @@ fun AppShell(
                 onThemeModeChange = onThemeModeChange
             )
 
-            BoxWithConstraints(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = maxHeight)
-                        .verticalScroll(rememberScrollState())
+                CompositionLocalProvider(
+                    LocalLayoutDirection provides LayoutDirection.Rtl
                 ) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        CompositionLocalProvider(
-                            LocalLayoutDirection provides LayoutDirection.Rtl
-                        ) {
-                            content()
-                        }
-                    }
-
-                    Spacer(
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    AppFooter()
+                    content()
                 }
             }
+
+            AppFooter()
         }
     }
 }

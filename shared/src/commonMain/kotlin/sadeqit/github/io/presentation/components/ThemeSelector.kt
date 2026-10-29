@@ -84,8 +84,8 @@ fun ThemeSelector(
     }
 
     val rotation = when (themeMode) {
-        AppThemeMode.Light -> sunRotation
-        AppThemeMode.Dark -> moonRotation.value
+        AppThemeMode.Light -> moonRotation.value
+        AppThemeMode.Dark -> sunRotation
     }
 
     var isHovered by remember { mutableStateOf(false) }
@@ -119,8 +119,8 @@ fun ThemeSelector(
     ) {
         Text(
             text = when (themeMode) {
-                AppThemeMode.Light -> "☀️"
-                AppThemeMode.Dark -> "🌙"
+                AppThemeMode.Light -> "🌙"
+                AppThemeMode.Dark -> "☀️"
             },
             modifier = Modifier.graphicsLayer {
                 rotationZ = rotation
@@ -129,28 +129,4 @@ fun ThemeSelector(
         )
     }
 
-    /*TextButton(
-        modifier = Modifier.semantics {
-            contentDescription = "تغییر تم"
-        },
-        onClick = {
-            onThemeModeChange(
-                when (themeMode) {
-                    AppThemeMode.Light -> AppThemeMode.Dark
-                    AppThemeMode.Dark -> AppThemeMode.Light
-                }
-            )
-        }
-    ) {
-        Text(
-            text = when (themeMode) {
-                AppThemeMode.Light -> "☀️"
-                AppThemeMode.Dark -> "🌙"
-            },
-            modifier = Modifier.graphicsLayer {
-                rotationZ = rotation
-            },
-            style = MaterialTheme.typography.titleMedium
-        )
-    }*/
 }
