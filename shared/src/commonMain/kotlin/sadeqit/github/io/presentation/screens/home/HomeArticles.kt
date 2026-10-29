@@ -1,25 +1,27 @@
 package sadeqit.github.io.presentation.screens.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-
+import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
+import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 @Composable
 fun HomeArticles(
+    isMobile: Boolean,
     onArticlesClick: () -> Unit,
 ) {
     HomeContainer(
@@ -39,42 +41,65 @@ fun HomeArticles(
             }
 
             HorizontalCardRow {
-                HomeReveal {
+                if (isMobile) {
                     ArticleCard(
                         modifier = Modifier.width(280.dp),
                         category = "KOTLIN",
                         title = "چرا Clean Code فقط تمیز نوشتن کد نیست؟",
                         onClick = onArticlesClick
                     )
-                }
 
-                HomeReveal {
                     ArticleCard(
                         modifier = Modifier.width(280.dp),
                         category = "ANDROID",
                         title = "ساختار پروژه‌های قابل نگهداری در Android",
                         onClick = onArticlesClick
                     )
-                }
 
-                HomeReveal {
                     ArticleCard(
                         modifier = Modifier.width(280.dp),
                         category = "COMPOSE",
                         title = "اصول طراحی UI قابل توسعه با Compose",
                         onClick = onArticlesClick
                     )
+                } else {
+                    HomeReveal {
+                        ArticleCard(
+                            modifier = Modifier.width(280.dp),
+                            category = "KOTLIN",
+                            title = "چرا Clean Code فقط تمیز نوشتن کد نیست؟",
+                            onClick = onArticlesClick
+                        )
+                    }
+
+                    HomeReveal {
+                        ArticleCard(
+                            modifier = Modifier.width(280.dp),
+                            category = "ANDROID",
+                            title = "ساختار پروژه‌های قابل نگهداری در Android",
+                            onClick = onArticlesClick
+                        )
+                    }
+
+                    HomeReveal {
+                        ArticleCard(
+                            modifier = Modifier.width(280.dp),
+                            category = "COMPOSE",
+                            title = "اصول طراحی UI قابل توسعه با Compose",
+                            onClick = onArticlesClick
+                        )
+                    }
                 }
             }
             HomeReveal {
-                OutlinedButton(
+                AnimatedOutlinedButton(
                     onClick = onArticlesClick,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    shape = MaterialTheme.shapes.medium
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
                     Text("مشاهده همه مقالات")
                 }
             }
+
         }
     }
 }
@@ -86,13 +111,24 @@ private fun ArticleCard(
     title: String,
     onClick: () -> Unit,
 ) {
+    val hoverEffect = rememberHoverEffect(
+        enableScale = true
+    )
+
     Card(
         onClick = onClick,
-        modifier = modifier,
-        shape = RoundedCornerShape(AppDimensions.Space16),
+        modifier = modifier.graphicsLayer {
+            scaleX = hoverEffect.scale
+            scaleY = hoverEffect.scale
+        },
+        border = BorderStroke(
+            width = AppDimensions.BorderThin,
+            brush = hoverEffect.borderBrush
+        ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
+        interactionSource = hoverEffect.interactionSource,
     ) {
         Column(
             modifier = Modifier.padding(AppDimensions.Space20),

@@ -56,6 +56,7 @@ fun HomeScreen(
 
             item {
                 HomeProjects(
+                    isMobile = isMobile,
                     onProjectsClick = onProjectsClick
                 )
             }
@@ -86,6 +87,7 @@ fun HomeScreen(
 
             item {
                 HomeArticles(
+                    isMobile = isMobile,
                     onArticlesClick = onArticlesClick
                 )
             }

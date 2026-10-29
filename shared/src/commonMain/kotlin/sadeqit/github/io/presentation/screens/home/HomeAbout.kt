@@ -6,12 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 @Composable
@@ -46,12 +45,13 @@ fun HomeAbout(
                     isMobile = true,
                     modifier = Modifier.align(Alignment.Start)
                 ) {
-                    OutlinedButton(
+                    AnimatedOutlinedButton(
                         onClick = onAboutClick,
-                        shape = MaterialTheme.shapes.medium
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
                         Text("بیشتر درباره من")
                     }
+
                 }
             }
         } else {
@@ -84,9 +84,8 @@ fun HomeAbout(
                         index = 1,
                         isMobile = false
                     ) {
-                        OutlinedButton(
-                            onClick = onAboutClick,
-                            shape = MaterialTheme.shapes.medium
+                        AnimatedOutlinedButton(
+                            onClick = onAboutClick
                         ) {
                             Text("بیشتر درباره من")
                         }

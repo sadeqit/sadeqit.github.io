@@ -3,6 +3,7 @@ package sadeqit.github.io.presentation.screens.home
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
+import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 @Composable
@@ -102,16 +105,20 @@ private fun SkillGroup(
     title: String,
     items: String,
 ) {
+    val hoverEffect = rememberHoverEffect(
+        enableScale = false
+    )
+
     Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(AppDimensions.Space12),
+        modifier = modifier
+            .hoverable(hoverEffect.interactionSource),
+        border = BorderStroke(
+            width = AppDimensions.BorderThin,
+            brush = hoverEffect.borderBrush
+        ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        border = BorderStroke(
-            width = AppDimensions.BorderThin,
-            color = MaterialTheme.colorScheme.outlineVariant
-        )
     ) {
         Column(
             modifier = Modifier.padding(AppDimensions.Space16),

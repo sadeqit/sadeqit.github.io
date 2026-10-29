@@ -1,13 +1,17 @@
 package sadeqit.github.io.presentation.screens.home
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -15,7 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-
+import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 private data class ApproachItem(
@@ -91,7 +95,9 @@ fun HomeApproach(
                     .chunked(columns)
                     .forEachIndexed { rowIndex, rowItems ->
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(IntrinsicSize.Min),
                             horizontalArrangement = Arrangement.spacedBy(spacing)
                         ) {
                             rowItems.forEachIndexed { columnIndex, item ->
@@ -104,7 +110,9 @@ fun HomeApproach(
                                         isMobile = false
                                     ) {
                                         ApproachCard(
-                                            modifier = Modifier.fillMaxWidth(),
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .fillMaxHeight(),
                                             number = (rowIndex * columns + columnIndex + 1)
                                                 .toString()
                                                 .padStart(2, '0'),
@@ -132,12 +140,20 @@ private fun ApproachCard(
     title: String,
     description: String,
 ) {
+    val hoverEffect = rememberHoverEffect(
+        enableScale = false
+    )
+
     Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(AppDimensions.Space16),
+        modifier = modifier
+            .hoverable(hoverEffect.interactionSource),
+        border = BorderStroke(
+            width = AppDimensions.BorderThin,
+            brush = hoverEffect.borderBrush
+        ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
     ) {
         Column(
             modifier = Modifier.padding(AppDimensions.Space20),
@@ -152,7 +168,6 @@ private fun ApproachCard(
 
             Text(
                 text = title,
-
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )

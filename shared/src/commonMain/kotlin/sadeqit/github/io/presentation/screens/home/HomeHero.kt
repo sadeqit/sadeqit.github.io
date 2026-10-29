@@ -3,10 +3,13 @@ package sadeqit.github.io.presentation.screens.home
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,11 +39,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import kotlinx.coroutines.delay
+import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
 import sadeqit.github.io.presentation.theme.AppDimensions
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -136,6 +141,18 @@ private fun HeroText(
     onProjectsClick: () -> Unit,
     onContactClick: () -> Unit,
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isHovered by interactionSource.collectIsHoveredAsState()
+
+    val scale by animateFloatAsState(
+        targetValue = if (isHovered) 1.04f else 1f,
+        animationSpec = tween(
+            durationMillis = 180,
+            easing = FastOutSlowInEasing
+        ),
+        label = "buttonScale"
+    )
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = if (centered) {
@@ -185,9 +202,14 @@ private fun HeroText(
             ) {
                 Button(
                     onClick = onProjectsClick,
+                    modifier = Modifier.graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                    },
+                    interactionSource = interactionSource,
                     shape = MaterialTheme.shapes.medium
                 ) {
-                    Text("پروژه‌های من")
+                    Text("پروژه‌ های من")
                 }
             }
 
@@ -195,15 +217,13 @@ private fun HeroText(
                 index = 1,
                 isMobile = centered
             ) {
-                OutlinedButton(
-                    onClick = onContactClick,
-                    shape = MaterialTheme.shapes.medium
+                AnimatedOutlinedButton(
+                    onClick = onContactClick
                 ) {
                     Text("تماس با من")
                 }
             }
         }
-
 
     }
 }

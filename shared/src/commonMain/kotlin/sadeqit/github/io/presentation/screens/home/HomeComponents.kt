@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +35,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onVisibilityChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import sadeqit.github.io.presentation.theme.AppBreakpoints
@@ -247,7 +250,16 @@ fun HorizontalCardRow(
             },
         horizontalArrangement = Arrangement.spacedBy(
             AppDimensions.Space16
-        ),
-        content = content
-    )
+        )
+    ) {
+        Spacer(
+            modifier = Modifier.width(AppDimensions.Space8)
+        )
+
+        content()
+
+        Spacer(
+            modifier = Modifier.width(AppDimensions.Space8)
+        )
+    }
 }
