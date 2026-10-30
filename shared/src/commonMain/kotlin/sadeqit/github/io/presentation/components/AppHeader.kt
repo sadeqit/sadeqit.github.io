@@ -243,13 +243,13 @@ private fun DesktopHeader(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // سمت چپ: تغییر تم
+
         ThemeSelector(
             themeMode = themeMode,
             onThemeModeChange = onThemeModeChange
         )
 
-        // وسط: ناوبری
+
         Row(
             modifier = Modifier.weight(1f),
             horizontalArrangement = Arrangement.Center,

@@ -9,30 +9,35 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AnimatedOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    val interactionSource = remember {
-        MutableInteractionSource()
-    }
-
-    val isHovered by interactionSource.collectIsHoveredAsState()
+    var isHovered by remember { mutableStateOf(false) }
+    val interactionSource = remember { MutableInteractionSource() }
 
     val scale by animateFloatAsState(
         targetValue = if (isHovered) 1.04f else 1f,
@@ -50,12 +55,27 @@ fun AnimatedOutlinedButton(
 
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.graphicsLayer {
-            scaleX = scale
-            scaleY = scale
-        },
-        interactionSource = interactionSource,
+        modifier = modifier
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .indication(interactionSource, null)
+            .onPointerEvent(PointerEventType.Enter) {
+                isHovered = true
+            }
+            .onPointerEvent(PointerEventType.Exit) {
+                isHovered = false
+            },
         shape = MaterialTheme.shapes.medium,
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = Color.Transparent,
+            contentColor = if (isHovered) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurface
+            }
+        ),
         border = if (isHovered) {
             BorderStroke(
                 width = 1.dp,
@@ -66,7 +86,8 @@ fun AnimatedOutlinedButton(
                 width = 2.dp,
                 color = MaterialTheme.colorScheme.outline
             )
-        }
+        },
+        interactionSource = interactionSource
     ) {
         content()
     }

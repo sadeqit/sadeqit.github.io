@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 @Composable
@@ -35,16 +36,9 @@ fun HomeContact(
     isMobile: Boolean,
     onContactClick: () -> Unit,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
-
-    val scale by animateFloatAsState(
-        targetValue = if (isHovered) 1.04f else 1f,
-        animationSpec = tween(
-            durationMillis = 180,
-            easing = FastOutSlowInEasing
-        ),
-        label = "buttonScale"
+    val hoverEffect = rememberHoverEffect(
+        enableScale = true,
+        scale = 1.04f
     )
     HomeReveal {
         HomeContainer(
@@ -94,10 +88,10 @@ fun HomeContact(
                     Button(
                         onClick = onContactClick,
                         modifier = Modifier.graphicsLayer {
-                            scaleX = scale
-                            scaleY = scale
+                            scaleX = hoverEffect.scale
+                            scaleY = hoverEffect.scale
                         },
-                        interactionSource = interactionSource,
+                        interactionSource = hoverEffect.interactionSource,
                         shape = MaterialTheme.shapes.medium,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.primary

@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import kotlinx.coroutines.delay
 import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
+import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.theme.AppDimensions
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -141,16 +142,9 @@ private fun HeroText(
     onProjectsClick: () -> Unit,
     onContactClick: () -> Unit,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
-
-    val scale by animateFloatAsState(
-        targetValue = if (isHovered) 1.04f else 1f,
-        animationSpec = tween(
-            durationMillis = 180,
-            easing = FastOutSlowInEasing
-        ),
-        label = "buttonScale"
+    val hoverEffect = rememberHoverEffect(
+        enableScale = true,
+        scale = 1.04f
     )
 
     Column(
@@ -165,7 +159,7 @@ private fun HeroText(
         )
     ) {
         Text(
-            text = "سلام من صادق هستم؛\nبرنامه نویس اندروید",
+            text = "سلام من صادق هستم؛\nبرنامه نویس اندروید.",
             style = if (centered) {
                 MaterialTheme.typography.headlineLarge
             } else {
@@ -203,10 +197,10 @@ private fun HeroText(
                 Button(
                     onClick = onProjectsClick,
                     modifier = Modifier.graphicsLayer {
-                        scaleX = scale
-                        scaleY = scale
+                        scaleX = hoverEffect.scale
+                        scaleY = hoverEffect.scale
                     },
-                    interactionSource = interactionSource,
+                    interactionSource = hoverEffect.interactionSource,
                     shape = MaterialTheme.shapes.medium
                 ) {
                     Text("پروژه‌ های من")
