@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import sadeqit.github.io.domain.model.Project
 import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
 import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.theme.AppDimensions
@@ -29,6 +30,7 @@ import sadeqit.github.io.presentation.theme.AppDimensions
 @Composable
 fun HomeProjects(
     isMobile: Boolean,
+    projects: List<Project>,
     onProjectsClick: () -> Unit,
 ) {
 
@@ -49,65 +51,27 @@ fun HomeProjects(
                     description = "از ایده تا انتشار — پروژه هایی که با هدف ساخت تجربه ای کاربردی و قابل اعتماد شکل گرفته اند."
                 )
             }
-
-            HorizontalCardRow{
+            HorizontalCardRow {
                 if (isMobile) {
-                    ProjectCard(
-                        modifier = Modifier.width(280.dp),
-                        title = "Weatherino",
-                        description = "اپلیکیشن هواشناسی مولتی‌پلتفرم با Kotlin Multiplatform و Compose.",
-                        tags = listOf("KMP", "Compose", "Ktor"),
-                        onClick = onProjectsClick
-                    )
-
-                    ProjectCard(
-                        modifier = Modifier.width(280.dp),
-                        title = "تعبیر خواب صادق",
-                        description = "اپلیکیشن اندرویدی با تمرکز روی تجربه کاربری ساده و سریع.",
-                        tags = listOf("Android", "Kotlin", "Compose"),
-                        onClick = onProjectsClick
-                    )
-
-                    ProjectCard(
-                        modifier = Modifier.width(280.dp),
-                        title = "SADEGH IT",
-                        description = "وب‌ سایت شخصی و حرفه‌ای برای معرفی تجربه، پروژه‌ها و مهارت‌ها.",
-                        tags = listOf("Kotlin", "Wasm", "Compose"),
-                        onClick = onProjectsClick
-                    )
+                    projects.forEach { project ->
+                        ProjectCard(
+                            modifier = Modifier.width(280.dp),
+                            project = project,
+                            onClick = onProjectsClick
+                        )
+                    }
                 } else {
-                    HomeReveal {
-                        ProjectCard(
-                            modifier = Modifier.width(280.dp),
-                            title = "Weatherino",
-                            description = "اپلیکیشن هواشناسی مولتی‌پلتفرم با Kotlin Multiplatform و Compose.",
-                            tags = listOf("KMP", "Compose", "Ktor"),
-                            onClick = onProjectsClick
-                        )
-                    }
-
-                    HomeReveal {
-                        ProjectCard(
-                            modifier = Modifier.width(280.dp),
-                            title = "تعبیر خواب صادق",
-                            description = "اپلیکیشن اندرویدی با تمرکز روی تجربه کاربری ساده و سریع.",
-                            tags = listOf("Android", "Kotlin", "Compose"),
-                            onClick = onProjectsClick
-                        )
-                    }
-
-                    HomeReveal {
-                        ProjectCard(
-                            modifier = Modifier.width(280.dp),
-                            title = "SADEGH IT",
-                            description = "وب‌ سایت شخصی و حرفه‌ای برای معرفی تجربه، پروژه‌ها و مهارت‌ها.",
-                            tags = listOf("Kotlin", "Wasm", "Compose"),
-                            onClick = onProjectsClick
-                        )
+                    projects.forEach { project ->
+                        HomeReveal {
+                            ProjectCard(
+                                modifier = Modifier.width(280.dp),
+                                project = project,
+                                onClick = onProjectsClick
+                            )
+                        }
                     }
                 }
             }
-
             HomeReveal {
                 AnimatedOutlinedButton(
                     onClick = onProjectsClick,
@@ -123,9 +87,7 @@ fun HomeProjects(
 @Composable
 private fun ProjectCard(
     modifier: Modifier = Modifier,
-    title: String,
-    description: String,
-    tags: List<String>,
+    project: Project,
     onClick: () -> Unit,
 ) {
     val hoverEffect = rememberHoverEffect(
@@ -170,13 +132,13 @@ private fun ProjectCard(
             }
 
             Text(
-                text = title,
+                text = project.title,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = description,
+                text = project.description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -185,7 +147,7 @@ private fun ProjectCard(
                 horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space8),
                 verticalArrangement = Arrangement.spacedBy(AppDimensions.Space8)
             ) {
-                tags.forEach { SkillChip(it) }
+                project.technologies.forEach { SkillChip(it) }
             }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import sadeqit.github.io.domain.model.Article
 import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
 import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.theme.AppDimensions
@@ -22,6 +23,7 @@ import sadeqit.github.io.presentation.theme.AppDimensions
 @Composable
 fun HomeArticles(
     isMobile: Boolean,
+    articles: List<Article>,
     onArticlesClick: () -> Unit,
 ) {
     HomeContainer(
@@ -42,55 +44,26 @@ fun HomeArticles(
 
             HorizontalCardRow {
                 if (isMobile) {
-                    ArticleCard(
-                        modifier = Modifier.width(280.dp),
-                        category = "KOTLIN",
-                        title = "چرا Clean Code فقط تمیز نوشتن کد نیست؟",
-                        onClick = onArticlesClick
-                    )
-
-                    ArticleCard(
-                        modifier = Modifier.width(280.dp),
-                        category = "ANDROID",
-                        title = "ساختار پروژه‌های قابل نگهداری در Android",
-                        onClick = onArticlesClick
-                    )
-
-                    ArticleCard(
-                        modifier = Modifier.width(280.dp),
-                        category = "COMPOSE",
-                        title = "اصول طراحی UI قابل توسعه با Compose",
-                        onClick = onArticlesClick
-                    )
+                    articles.forEach { article ->
+                        ArticleCard(
+                            modifier = Modifier.width(280.dp),
+                            article = article,
+                            onClick = onArticlesClick
+                        )
+                    }
                 } else {
-                    HomeReveal {
-                        ArticleCard(
-                            modifier = Modifier.width(280.dp),
-                            category = "KOTLIN",
-                            title = "چرا Clean Code فقط تمیز نوشتن کد نیست؟",
-                            onClick = onArticlesClick
-                        )
-                    }
-
-                    HomeReveal {
-                        ArticleCard(
-                            modifier = Modifier.width(280.dp),
-                            category = "ANDROID",
-                            title = "ساختار پروژه‌های قابل نگهداری در Android",
-                            onClick = onArticlesClick
-                        )
-                    }
-
-                    HomeReveal {
-                        ArticleCard(
-                            modifier = Modifier.width(280.dp),
-                            category = "COMPOSE",
-                            title = "اصول طراحی UI قابل توسعه با Compose",
-                            onClick = onArticlesClick
-                        )
+                    articles.forEach { article ->
+                        HomeReveal {
+                            ArticleCard(
+                                modifier = Modifier.width(280.dp),
+                                article = article,
+                                onClick = onArticlesClick
+                            )
+                        }
                     }
                 }
             }
+
             HomeReveal {
                 AnimatedOutlinedButton(
                     onClick = onArticlesClick,
@@ -107,8 +80,7 @@ fun HomeArticles(
 @Composable
 private fun ArticleCard(
     modifier: Modifier = Modifier,
-    category: String,
-    title: String,
+    article: Article,
     onClick: () -> Unit,
 ) {
     val hoverEffect = rememberHoverEffect(
@@ -135,14 +107,14 @@ private fun ArticleCard(
             verticalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
         ) {
             Text(
-                text = category,
+                text = article.tags.firstOrNull()?.uppercase() ?: "ARTICLE",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = title,
+                text = article.title,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )

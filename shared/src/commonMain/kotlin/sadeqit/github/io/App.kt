@@ -5,6 +5,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
+import sadeqit.github.io.di.appModule
 import sadeqit.github.io.presentation.navigation.AppNavigation
 import sadeqit.github.io.presentation.theme.AppTheme
 import sadeqit.github.io.presentation.theme.AppThemeMode
@@ -12,21 +15,27 @@ import sadeqit.github.io.presentation.theme.ThemeStorage
 
 @Composable
 fun App() {
-    var themeMode by remember {
-        mutableStateOf(
-            ThemeStorage.load() ?: AppThemeMode.Dark
-        )
-    }
-
-    AppTheme(
-        themeMode = themeMode
+    KoinApplication(
+        configuration = koinConfiguration {
+            modules(appModule)
+        }
     ) {
-        AppNavigation(
-            themeMode = themeMode,
-            onThemeModeChange = { newThemeMode ->
-                themeMode = newThemeMode
-                ThemeStorage.save(newThemeMode)
-            }
-        )
+        var themeMode by remember {
+            mutableStateOf(
+                ThemeStorage.load() ?: AppThemeMode.Dark
+            )
+        }
+
+        AppTheme(
+            themeMode = themeMode
+        ) {
+            AppNavigation(
+                themeMode = themeMode,
+                onThemeModeChange = { newThemeMode ->
+                    themeMode = newThemeMode
+                    ThemeStorage.save(newThemeMode)
+                }
+            )
+        }
     }
 }

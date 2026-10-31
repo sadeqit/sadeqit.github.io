@@ -6,7 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import org.koin.compose.koinInject
+import sadeqit.github.io.domain.repository.ArticleRepository
+import sadeqit.github.io.domain.repository.ProjectRepository
+import sadeqit.github.io.presentation.components.AppFooter
 import sadeqit.github.io.presentation.screens.home.HomeAbout
 import sadeqit.github.io.presentation.screens.home.HomeApproach
 import sadeqit.github.io.presentation.screens.home.HomeArticles
@@ -23,6 +30,12 @@ fun HomeScreen(
     onAboutClick: () -> Unit,
     onContactClick: () -> Unit,
 ) {
+    val projectRepository = koinInject<ProjectRepository>()
+    val articleRepository = koinInject<ArticleRepository>()
+
+    val featuredProjects = projectRepository.getFeaturedProjects()
+    val featuredArticles = articleRepository.getFeaturedArticles()
+
     BoxWithConstraints(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -57,6 +70,7 @@ fun HomeScreen(
             item {
                 HomeProjects(
                     isMobile = isMobile,
+                    projects = featuredProjects,
                     onProjectsClick = onProjectsClick
                 )
             }
@@ -88,6 +102,7 @@ fun HomeScreen(
             item {
                 HomeArticles(
                     isMobile = isMobile,
+                    articles = featuredArticles,
                     onArticlesClick = onArticlesClick
                 )
             }
@@ -101,6 +116,13 @@ fun HomeScreen(
                     isMobile = isMobile,
                     onContactClick = onContactClick
                 )
+            }
+            item {
+                CompositionLocalProvider(
+                    LocalLayoutDirection provides LayoutDirection.Ltr
+                ) {
+                    AppFooter()
+                }
             }
         }
     }
