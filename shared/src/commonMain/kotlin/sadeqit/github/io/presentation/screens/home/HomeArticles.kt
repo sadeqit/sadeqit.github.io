@@ -64,7 +64,10 @@ fun HomeArticles(
                 }
             }
 
-            HomeReveal {
+            HomeRevealItem(
+                index = 1,
+                isMobile = isMobile
+            ) {
                 AnimatedOutlinedButton(
                     onClick = onArticlesClick,
                     modifier = Modifier.align(Alignment.CenterHorizontally)

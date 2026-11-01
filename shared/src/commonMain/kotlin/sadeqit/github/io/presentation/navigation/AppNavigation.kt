@@ -12,6 +12,7 @@ import sadeqit.github.io.presentation.screens.ContactScreen
 import sadeqit.github.io.presentation.screens.HomeScreen
 import sadeqit.github.io.presentation.screens.ProjectsScreen
 import sadeqit.github.io.presentation.screens.ResumeScreen
+import sadeqit.github.io.presentation.screens.projectScreen.ProjectDetailsScreen
 import sadeqit.github.io.presentation.theme.AppThemeMode
 
 @Composable
@@ -34,6 +35,9 @@ fun AppNavigation(
                 onProjectsClick = {
                     currentRoute = AppRoute.Projects
                 },
+                onProjectClick = { projectId ->
+                    currentRoute = AppRoute.ProjectDetails(projectId)
+                },
                 onArticlesClick = {
                     currentRoute = AppRoute.Articles
                 },
@@ -44,7 +48,14 @@ fun AppNavigation(
                     currentRoute = AppRoute.Contact
                 }
             )
-            AppRoute.Projects -> ProjectsScreen()
+
+            AppRoute.Projects -> ProjectsScreen(
+                onProjectClick = { projectId ->
+                    currentRoute = AppRoute.ProjectDetails(projectId)
+                }
+            )
+            is AppRoute.ProjectDetails -> ProjectDetailsScreen()
+
             AppRoute.Articles -> ArticlesScreen()
             AppRoute.Resume -> ResumeScreen()
             AppRoute.About -> AboutScreen()

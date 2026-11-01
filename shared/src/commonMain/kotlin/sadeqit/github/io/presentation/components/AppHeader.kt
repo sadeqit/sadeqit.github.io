@@ -255,7 +255,6 @@ private fun DesktopHeader(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             NavigationItem(
                 text = "تماس با من",
                 selected = currentRoute == AppRoute.Contact,
@@ -266,21 +265,21 @@ private fun DesktopHeader(
                 selected = currentRoute == AppRoute.About,
                 onClick = { onNavigate(AppRoute.About) }
             )
-
             NavigationItem(
-                text = "پروژه‌ها",
-                selected = currentRoute == AppRoute.Projects,
-                onClick = { onNavigate(AppRoute.Projects) }
+                text = "رزومه",
+                selected = currentRoute == AppRoute.Resume,
+                onClick = { onNavigate(AppRoute.Resume) }
             )
             NavigationItem(
                 text = "مقالات",
                 selected = currentRoute == AppRoute.Articles,
                 onClick = { onNavigate(AppRoute.Articles) }
             )
+
             NavigationItem(
-                text = "رزومه",
-                selected = currentRoute == AppRoute.Resume,
-                onClick = { onNavigate(AppRoute.Resume) }
+                text = "پروژه‌ها",
+                selected = currentRoute == AppRoute.Projects,
+                onClick = { onNavigate(AppRoute.Projects) }
             )
             NavigationItem(
                 text = "خانه",

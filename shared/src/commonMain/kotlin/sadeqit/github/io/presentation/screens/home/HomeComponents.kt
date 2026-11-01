@@ -195,7 +195,6 @@ fun SectionHeader(
                 TextAlign.Start
             }
         )
-
         Text(
             text = title,
             style = MaterialTheme.typography.headlineMedium,
@@ -207,7 +206,6 @@ fun SectionHeader(
                 TextAlign.Start
             }
         )
-
         Text(
             text = description,
             modifier = Modifier.widthIn(max = 720.dp),
@@ -229,7 +227,6 @@ fun HorizontalCardRow(
 ) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
-
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -250,11 +247,9 @@ fun HorizontalCardRow(
         )
     ) {
         Spacer(
-            modifier = Modifier.width(AppDimensions.Space8)
+            modifier = Modifier.width(AppDimensions.Space4)
         )
-
         content()
-
         Spacer(
             modifier = Modifier.width(AppDimensions.Space8)
         )

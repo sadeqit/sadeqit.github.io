@@ -6,6 +6,8 @@ sealed interface AppRoute {
 
     data object Projects : AppRoute
 
+    data class ProjectDetails(val projectId: String) : AppRoute
+
     data object Articles : AppRoute
 
     data object Resume : AppRoute

@@ -26,6 +26,7 @@ import sadeqit.github.io.presentation.theme.AppBreakpoints
 @Composable
 fun HomeScreen(
     onProjectsClick: () -> Unit,
+    onProjectClick: (String) -> Unit,
     onArticlesClick: () -> Unit,
     onAboutClick: () -> Unit,
     onContactClick: () -> Unit,
@@ -71,7 +72,8 @@ fun HomeScreen(
                 HomeProjects(
                     isMobile = isMobile,
                     projects = featuredProjects,
-                    onProjectsClick = onProjectsClick
+                    onProjectsClick = onProjectsClick,
+                    onProjectClick = onProjectClick
                 )
             }
 
