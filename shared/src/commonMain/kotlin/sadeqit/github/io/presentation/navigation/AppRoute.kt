@@ -1,18 +1,47 @@
 package sadeqit.github.io.presentation.navigation
 
 sealed interface AppRoute {
-
     data object Home : AppRoute
-
     data object Projects : AppRoute
-
     data class ProjectDetails(val projectId: String) : AppRoute
-
     data object Articles : AppRoute
-
     data object Resume : AppRoute
-
     data object About : AppRoute
-
     data object Contact : AppRoute
+}
+
+fun AppRoute.toPath(): String = when (this) {
+    AppRoute.Home -> "/"
+    AppRoute.Projects -> "/projects"
+    is AppRoute.ProjectDetails -> "/projects/$projectId"
+    AppRoute.Articles -> "/articles"
+    AppRoute.Resume -> "/resume"
+    AppRoute.About -> "/about"
+    AppRoute.Contact -> "/contact"
+}
+
+fun String.toAppRoute(): AppRoute {
+    val path = substringBefore("?")
+        .substringBefore("#")
+        .trimEnd('/')
+        .ifEmpty { "/" }
+
+    return when {
+        path == "/" -> AppRoute.Home
+        path == "/projects" -> AppRoute.Projects
+        path.startsWith("/projects/") -> {
+            val projectId = path.removePrefix("/projects/")
+
+            if (projectId.isNotBlank() && '/' !in projectId) {
+                AppRoute.ProjectDetails(projectId)
+            } else {
+                AppRoute.Projects
+            }
+        }
+        path == "/articles" -> AppRoute.Articles
+        path == "/resume" -> AppRoute.Resume
+        path == "/about" -> AppRoute.About
+        path == "/contact" -> AppRoute.Contact
+        else -> AppRoute.Home
+    }
 }

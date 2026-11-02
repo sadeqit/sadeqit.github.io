@@ -41,6 +41,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import sadeqit.github.io.domain.model.Project
+import sadeqit.github.io.domain.model.ProjectReleaseType
+import sadeqit.github.io.domain.model.ProjectType
 import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.shared.generated.resources.Res
 import sadeqit.shared.generated.resources.dream
@@ -124,13 +126,9 @@ fun ProjectCard(
                             AppDimensions.Space8
                         )
                     ) {
-                        project.technologies
-                            .take(2)
-                            .forEach { technology ->
-                                ProjectTechnologyChip(technology)
-                            }
+                        ProjectTypeChip(project.projectType)
+                        ProjectReleaseChip(project.releaseType)
                     }
-
                     HorizontalDivider(
                         color = MaterialTheme.colorScheme.outlineVariant
                     )
@@ -217,39 +215,52 @@ fun ProjectCard(
         }
     }
 }
-
 @Composable
-private fun ProjectTechnologyChip(
-    technology: String
-) {
-    val (backgroundColor, textColor) = when (technology.lowercase()) {
-        "kotlin" -> Color(0x147F52FF) to Color(0xFF9B78F5)
+private fun ProjectTypeChip(type: ProjectType) {
+    val (label, backgroundColor, textColor) = when (type) {
+        ProjectType.Android -> Triple(
+            "Android",
+            Color(0x1416803D),
+            Color(0xFF55A875)
+        )
 
-        "kotlin multiplatform" -> Color(0x146D28D9) to Color(0xFFA185E3)
-
-        "compose multiplatform",
-        "jetpack compose" -> Color(0x140284C7) to Color(0xFF38A3D5)
-
-        "ktor" -> Color(0x140369A1) to Color(0xFF398DBA)
-
-        "koin" -> Color(0x14B45309) to Color(0xFFC58A48)
-
-        "sqldelight" -> Color(0x1415803D) to Color(0xFF55A875)
-
-        "android" -> Color(0x1416803D) to Color(0xFF55A875)
-
-        "room" -> Color(0x14C2410C) to Color(0xFFC77B54)
-
-        "hilt" -> Color(0x14BE185D) to Color(0xFFC56A98)
-
-        "datastore" -> Color(0x144338CA) to Color(0xFF777DD1)
-
-        else -> MaterialTheme.colorScheme.primary.copy(alpha = 0.08f) to
-                MaterialTheme.colorScheme.primary
+        ProjectType.KMP -> Triple(
+            "KMP",
+            Color(0x147F52FF),
+            Color(0xFF9B78F5)
+        )
     }
 
+    ProjectInfoChip(label, backgroundColor, textColor)
+}
+
+@Composable
+private fun ProjectReleaseChip(type: ProjectReleaseType) {
+    val (label, backgroundColor, textColor) = when (type) {
+        ProjectReleaseType.Released -> Triple(
+            "Released",
+            Color(0x140284C7),
+            Color(0xFF38A3D5)
+        )
+
+        ProjectReleaseType.SourceCode -> Triple(
+            "Source Code",
+            Color(0x140284C7),
+            Color(0xFF38A3D5)
+        )
+    }
+
+    ProjectInfoChip(label, backgroundColor, textColor)
+}
+
+@Composable
+private fun ProjectInfoChip(
+    label: String,
+    backgroundColor: Color,
+    textColor: Color
+) {
     Text(
-        text = technology,
+        text = label,
         modifier = Modifier
             .background(
                 color = backgroundColor,

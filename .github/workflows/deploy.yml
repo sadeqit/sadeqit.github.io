@@ -34,7 +34,12 @@ jobs:
 
       - name: Build web application
         run: ./gradlew :webApp:composeCompatibilityBrowserDistribution
-
+      
+      - name: Prepare SPA fallback
+        run: |
+          cp webApp/build/dist/composeWebCompatibility/productionExecutable/index.html \
+             webApp/build/dist/composeWebCompatibility/productionExecutable/404.html
+        
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 

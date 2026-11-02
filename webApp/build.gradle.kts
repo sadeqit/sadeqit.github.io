@@ -21,8 +21,12 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":shared"))
-
             implementation(libs.compose.ui)
         }
+
+        webMain.dependencies {
+            implementation(libs.wrappers.browser)
+        }
     }
+
 }

@@ -9,12 +9,13 @@ import org.koin.compose.KoinApplication
 import org.koin.dsl.koinConfiguration
 import sadeqit.github.io.di.appModule
 import sadeqit.github.io.presentation.navigation.AppNavigation
+import sadeqit.github.io.presentation.navigation.BrowserRouter
 import sadeqit.github.io.presentation.theme.AppTheme
 import sadeqit.github.io.presentation.theme.AppThemeMode
 import sadeqit.github.io.presentation.theme.ThemeStorage
 
 @Composable
-fun App() {
+fun App(browserRouter: BrowserRouter) {
     KoinApplication(
         configuration = koinConfiguration {
             modules(appModule)
@@ -30,6 +31,7 @@ fun App() {
             themeMode = themeMode
         ) {
             AppNavigation(
+                browserRouter = browserRouter,
                 themeMode = themeMode,
                 onThemeModeChange = { newThemeMode ->
                     themeMode = newThemeMode
