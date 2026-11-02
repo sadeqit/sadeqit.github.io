@@ -43,6 +43,7 @@ import org.jetbrains.compose.resources.painterResource
 import sadeqit.github.io.domain.model.Project
 import sadeqit.github.io.domain.model.ProjectReleaseType
 import sadeqit.github.io.domain.model.ProjectType
+import sadeqit.github.io.presentation.theme.AppColors
 import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.shared.generated.resources.Res
 import sadeqit.shared.generated.resources.dream
@@ -215,19 +216,20 @@ fun ProjectCard(
         }
     }
 }
+
 @Composable
-private fun ProjectTypeChip(type: ProjectType) {
+fun ProjectTypeChip(type: ProjectType) {
     val (label, backgroundColor, textColor) = when (type) {
         ProjectType.Android -> Triple(
             "Android",
-            Color(0x1416803D),
-            Color(0xFF55A875)
+            AppColors.ProjectAndroidBackground,
+            AppColors.ProjectAndroid
         )
 
         ProjectType.KMP -> Triple(
             "KMP",
-            Color(0x147F52FF),
-            Color(0xFF9B78F5)
+            AppColors.ProjectKmpBackground,
+            AppColors.ProjectKmp
         )
     }
 
@@ -235,18 +237,18 @@ private fun ProjectTypeChip(type: ProjectType) {
 }
 
 @Composable
-private fun ProjectReleaseChip(type: ProjectReleaseType) {
+fun ProjectReleaseChip(type: ProjectReleaseType) {
     val (label, backgroundColor, textColor) = when (type) {
         ProjectReleaseType.Released -> Triple(
             "Released",
-            Color(0x140284C7),
-            Color(0xFF38A3D5)
+            AppColors.ProjectReleasedBackground,
+            AppColors.ProjectReleased
         )
 
         ProjectReleaseType.SourceCode -> Triple(
             "Source Code",
-            Color(0x140284C7),
-            Color(0xFF38A3D5)
+            AppColors.ProjectSourceCodeBackground,
+            AppColors.ProjectSourceCode
         )
     }
 
@@ -254,7 +256,7 @@ private fun ProjectReleaseChip(type: ProjectReleaseType) {
 }
 
 @Composable
-private fun ProjectInfoChip(
+fun ProjectInfoChip(
     label: String,
     backgroundColor: Color,
     textColor: Color

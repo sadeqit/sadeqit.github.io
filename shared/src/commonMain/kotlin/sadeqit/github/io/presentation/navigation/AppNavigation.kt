@@ -84,9 +84,6 @@ fun AppNavigation(
                 if (project != null) {
                     ProjectDetailsScreen(
                         project = project,
-                        onBackClick = {
-                            browserRouter.back(AppRoute.Projects.toPath())
-                        }
                     )
                 } else {
                     NotFoundScreen(

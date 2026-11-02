@@ -45,4 +45,20 @@ internal object AppColors {
 
     val DarkCodeBackground = Color(0xFF020617)
     val DarkCodeText = Color(0xFFE2E8F0)
+
+    // Project Chips
+    val ProjectAndroid = Color(0xFF55A875)
+    val ProjectAndroidBackground = Color(0x1455A875)
+
+    val ProjectKmp = Color(0xFF9B78F5)
+    val ProjectKmpBackground = Color(0x149B78F5)
+
+    val ProjectReleased = Color(0xFF38A3D5)
+    val ProjectReleasedBackground = Color(0x1438A3D5)
+
+    val ProjectSourceCode = Color(0xFF38A3D5)
+    val ProjectSourceCodeBackground = Color(0x1438A3D5)
+
+    val ProjectStatus = Color(0xFF55A875)
+    val ProjectStatusBackground = Color(0x1455A875)
 }

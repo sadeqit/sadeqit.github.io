@@ -21,9 +21,7 @@ data class Project(
     val platforms: List<String> = emptyList(),
     val architecture: String = "",
     val challenges: List<ProjectChallenge> = emptyList(),
-    val contributions: List<String> = emptyList(),
     val screenshots: List<String> = emptyList(),
-    val achievements: List<String> = emptyList()
 )
 
 enum class ProjectType {
