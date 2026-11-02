@@ -13,6 +13,7 @@ import sadeqit.github.io.presentation.screens.AboutScreen
 import sadeqit.github.io.presentation.screens.ArticlesScreen
 import sadeqit.github.io.presentation.screens.ContactScreen
 import sadeqit.github.io.presentation.screens.HomeScreen
+import sadeqit.github.io.presentation.screens.NotFoundScreen
 import sadeqit.github.io.presentation.screens.ProjectsScreen
 import sadeqit.github.io.presentation.screens.ResumeScreen
 import sadeqit.github.io.presentation.screens.projectScreen.ProjectDetailsScreen
@@ -88,9 +89,9 @@ fun AppNavigation(
                         }
                     )
                 } else {
-                    ProjectsScreen(
-                        onProjectClick = { projectId ->
-                            navigateTo(AppRoute.ProjectDetails(projectId))
+                    NotFoundScreen(
+                        onHomeClick = {
+                            navigateTo(AppRoute.Home)
                         }
                     )
                 }
@@ -100,6 +101,12 @@ fun AppNavigation(
             AppRoute.Resume -> ResumeScreen()
             AppRoute.About -> AboutScreen()
             AppRoute.Contact -> ContactScreen()
+
+            AppRoute.NotFound -> NotFoundScreen(
+                onHomeClick = {
+                    navigateTo(AppRoute.Home)
+                }
+            )
         }
     }
 }

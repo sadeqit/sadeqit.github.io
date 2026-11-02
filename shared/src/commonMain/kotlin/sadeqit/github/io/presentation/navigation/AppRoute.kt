@@ -8,16 +8,18 @@ sealed interface AppRoute {
     data object Resume : AppRoute
     data object About : AppRoute
     data object Contact : AppRoute
+    data object NotFound : AppRoute
 }
 
 fun AppRoute.toPath(): String = when (this) {
     AppRoute.Home -> "/"
     AppRoute.Projects -> "/projects"
-    is AppRoute.ProjectDetails -> "/projects/$projectId"
+    is AppRoute.ProjectDetails -> "/projects/${this.projectId}"
     AppRoute.Articles -> "/articles"
     AppRoute.Resume -> "/resume"
     AppRoute.About -> "/about"
     AppRoute.Contact -> "/contact"
+    AppRoute.NotFound -> "/404"
 }
 
 fun String.toAppRoute(): AppRoute {
@@ -29,19 +31,23 @@ fun String.toAppRoute(): AppRoute {
     return when {
         path == "/" -> AppRoute.Home
         path == "/projects" -> AppRoute.Projects
+
         path.startsWith("/projects/") -> {
             val projectId = path.removePrefix("/projects/")
 
             if (projectId.isNotBlank() && '/' !in projectId) {
                 AppRoute.ProjectDetails(projectId)
             } else {
-                AppRoute.Projects
+                AppRoute.NotFound
             }
         }
+
         path == "/articles" -> AppRoute.Articles
         path == "/resume" -> AppRoute.Resume
         path == "/about" -> AppRoute.About
         path == "/contact" -> AppRoute.Contact
-        else -> AppRoute.Home
+        path == "/404" -> AppRoute.NotFound
+
+        else -> AppRoute.NotFound
     }
 }
