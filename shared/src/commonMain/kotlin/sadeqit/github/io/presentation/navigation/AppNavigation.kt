@@ -16,6 +16,7 @@ import sadeqit.github.io.presentation.screens.HomeScreen
 import sadeqit.github.io.presentation.screens.NotFoundScreen
 import sadeqit.github.io.presentation.screens.ProjectsScreen
 import sadeqit.github.io.presentation.screens.ResumeScreen
+import sadeqit.github.io.presentation.screens.articleScreen.ArticleDetailsScreen
 import sadeqit.github.io.presentation.screens.projectScreen.ProjectDetailsScreen
 import sadeqit.github.io.presentation.theme.AppThemeMode
 
@@ -69,6 +70,9 @@ fun AppNavigation(
                 },
                 onContactClick = {
                     navigateTo(AppRoute.Contact)
+                },
+                onArticleClick = { slug ->
+                    navigateTo(AppRoute.ArticleDetails(slug))
                 }
             )
 
@@ -94,7 +98,15 @@ fun AppNavigation(
                 }
             }
 
-            AppRoute.Articles -> ArticlesScreen()
+            AppRoute.Articles -> ArticlesScreen(
+                onArticleClick = { slug ->
+                    navigateTo(AppRoute.ArticleDetails(slug))
+                }
+            )
+            is AppRoute.ArticleDetails -> {
+                ArticleDetailsScreen(slug = route.slug)
+            }
+
             AppRoute.Resume -> ResumeScreen()
             AppRoute.About -> AboutScreen()
             AppRoute.Contact -> ContactScreen()

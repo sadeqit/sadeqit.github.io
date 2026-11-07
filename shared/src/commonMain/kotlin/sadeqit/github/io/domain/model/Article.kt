@@ -10,5 +10,4 @@ data class Article(
     val readTime: Int,
     val slug: String,
     val featured: Boolean = false,
-    val content: String
 )

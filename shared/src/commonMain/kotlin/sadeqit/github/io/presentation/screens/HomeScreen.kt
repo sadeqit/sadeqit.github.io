@@ -30,12 +30,12 @@ fun HomeScreen(
     onArticlesClick: () -> Unit,
     onAboutClick: () -> Unit,
     onContactClick: () -> Unit,
+    onArticleClick: (String) -> Unit,
 ) {
     val projectRepository = koinInject<ProjectRepository>()
-    val articleRepository = koinInject<ArticleRepository>()
-
     val featuredProjects = projectRepository.getFeaturedProjects()
-    val featuredArticles = articleRepository.getFeaturedArticles()
+    val articleRepository = koinInject<ArticleRepository>()
+    val articles = articleRepository.getFeaturedArticles()
 
     BoxWithConstraints(
         modifier = Modifier.fillMaxWidth()
@@ -104,8 +104,9 @@ fun HomeScreen(
             item {
                 HomeArticles(
                     isMobile = isMobile,
-                    articles = featuredArticles,
-                    onArticlesClick = onArticlesClick
+                    articles = articles,
+                    onArticlesClick = onArticlesClick,
+                    onArticleClick = onArticleClick
                 )
             }
 

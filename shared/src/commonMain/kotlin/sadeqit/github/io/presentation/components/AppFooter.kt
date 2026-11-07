@@ -38,13 +38,13 @@ fun AppFooter() {
                 Text(
                     text = "© 2026 SADEGH IT",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
 
                 Text(
                     text = "KMP ساخته شده با",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
         }

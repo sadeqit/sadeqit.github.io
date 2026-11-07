@@ -46,19 +46,36 @@ internal object AppColors {
     val DarkCodeBackground = Color(0xFF020617)
     val DarkCodeText = Color(0xFFE2E8F0)
 
+
     // Project Chips
-    val ProjectAndroid = Color(0xFF55A875)
+    val ProjectAndroidDark = Color(0xFF4ADE80)
+    val ProjectKmpDark = Color(0xFFA78EF3)
+    val ProjectReleasedDark = Color(0xFF38BDF8)
+    val ProjectSourceCodeDark = Color(0xFF38BDF8)
+    val ProjectStatusDark = Color(0xFF4ADE80)
+
+    val ProjectAndroid = Color(0xFF25834B)
+    val ProjectKmp = Color(0xFF7040D0)
+    val ProjectReleased = Color(0xFF1679A8)
+    val ProjectSourceCode = Color(0xFF1679A8)
+    val ProjectStatus = Color(0xFF25834B)
     val ProjectAndroidBackground = Color(0x1455A875)
-
-    val ProjectKmp = Color(0xFF9B78F5)
     val ProjectKmpBackground = Color(0x149B78F5)
-
-    val ProjectReleased = Color(0xFF38A3D5)
     val ProjectReleasedBackground = Color(0x1438A3D5)
-
-    val ProjectSourceCode = Color(0xFF38A3D5)
     val ProjectSourceCodeBackground = Color(0x1438A3D5)
-
-    val ProjectStatus = Color(0xFF55A875)
     val ProjectStatusBackground = Color(0x1455A875)
+
+    // Article Tags - Dark
+
+    val ArticleTagPrimaryBackground = Color(0xFFDBEAFE)
+    val ArticleTagPrimary = Color(0xFF587DFC)
+
+    val ArticleTagSecondaryBackground = Color(0xFFD1FAE5)
+    val ArticleTagSecondary = Color(0xFF065F46)
+
+    val ArticleTagPrimaryDark = Color(0xFF60A5FA)
+    val ArticleTagSecondaryDark = Color(0xFF34D399)
+    val ArticleTagPrimaryDarkBackground = Color(0xFF1E3A5F)
+    val ArticleTagSecondaryDarkBackground = Color(0xFF164B3A)
+
 }

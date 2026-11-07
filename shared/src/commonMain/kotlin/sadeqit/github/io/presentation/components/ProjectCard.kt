@@ -219,17 +219,19 @@ fun ProjectCard(
 
 @Composable
 fun ProjectTypeChip(type: ProjectType) {
+    val isDark = MaterialTheme.colorScheme.background == AppColors.DarkBackground
+
     val (label, backgroundColor, textColor) = when (type) {
         ProjectType.Android -> Triple(
             "Android",
             AppColors.ProjectAndroidBackground,
-            AppColors.ProjectAndroid
+            if (isDark) AppColors.ProjectAndroidDark else AppColors.ProjectAndroid
         )
 
         ProjectType.KMP -> Triple(
             "KMP",
             AppColors.ProjectKmpBackground,
-            AppColors.ProjectKmp
+            if (isDark) AppColors.ProjectKmpDark else AppColors.ProjectKmp
         )
     }
 
@@ -238,17 +240,19 @@ fun ProjectTypeChip(type: ProjectType) {
 
 @Composable
 fun ProjectReleaseChip(type: ProjectReleaseType) {
+    val isDark = MaterialTheme.colorScheme.background == AppColors.DarkBackground
+
     val (label, backgroundColor, textColor) = when (type) {
         ProjectReleaseType.Released -> Triple(
             "Released",
             AppColors.ProjectReleasedBackground,
-            AppColors.ProjectReleased
+            if (isDark) AppColors.ProjectReleasedDark else AppColors.ProjectReleased
         )
 
         ProjectReleaseType.SourceCode -> Triple(
             "Source Code",
             AppColors.ProjectSourceCodeBackground,
-            AppColors.ProjectSourceCode
+            if (isDark) AppColors.ProjectSourceCodeDark else AppColors.ProjectSourceCode
         )
     }
 
