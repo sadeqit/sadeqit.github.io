@@ -25,34 +25,33 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import sadeqit.github.io.domain.model.Article
 import sadeqit.github.io.domain.model.ArticleContent
 import sadeqit.github.io.domain.repository.ArticleRepository
 import sadeqit.github.io.presentation.components.article.ArticleContentRenderer
+import sadeqit.github.io.presentation.components.articles.ArticleTableOfContents
+import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.shared.generated.resources.Res
 import sadeqit.shared.generated.resources.article_clean_code
 import sadeqit.shared.generated.resources.article_kotlin_multiplatform
-import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.relocation.bringIntoViewRequester
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.withFrameNanos
-import androidx.compose.ui.layout.LayoutCoordinates
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInRoot
-import kotlinx.coroutines.launch
-import sadeqit.github.io.presentation.components.articles.ArticleTableOfContents
 import kotlin.math.roundToInt
 
 
@@ -93,7 +92,6 @@ fun ArticleDetailsScreen(
         articleContent = articleRepository.getArticleContent(slug)
         isLoading = false
     }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -168,54 +166,58 @@ fun ArticleDetailsScreen(
                     )
 
                     content.sections.forEach { section ->
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .onGloballyPositioned {
-                                    sectionCoordinates[section.id] = it
-                                },
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            HorizontalDivider(
-                                color = MaterialTheme.colorScheme.outlineVariant,
-                                thickness = 2.dp
-                            )
+                        HomeReveal {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .onGloballyPositioned {
+                                        sectionCoordinates[section.id] = it
+                                    },
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                HorizontalDivider(
+                                    color = MaterialTheme.colorScheme.outlineVariant,
+                                    thickness = 2.dp
+                                )
 
-                            Spacer(Modifier.height(7.dp))
+                                Spacer(Modifier.height(7.dp))
 
-                            Text(
-                                text = section.title,
-                                style = MaterialTheme.typography.headlineMedium,
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
+                                Text(
+                                    text = section.title,
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    color = MaterialTheme.colorScheme.onBackground
+                                )
 
-                            ArticleContentRenderer(
-                                blocks = section.blocks
-                            )
+                                ArticleContentRenderer(
+                                    blocks = section.blocks
+                                )
+                            }
                         }
                     }
 
                     if (content.conclusion.isNotEmpty()) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            HorizontalDivider(
-                                color = MaterialTheme.colorScheme.outlineVariant,
-                                thickness = 2.dp
-                            )
+                        HomeReveal {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                HorizontalDivider(
+                                    color = MaterialTheme.colorScheme.outlineVariant,
+                                    thickness = 2.dp
+                                )
 
-                            Spacer(Modifier.height(7.dp))
+                                Spacer(Modifier.height(7.dp))
 
-                            Text(
-                                text = "جمع‌بندی",
-                                style = MaterialTheme.typography.headlineMedium,
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
+                                Text(
+                                    text = "جمع‌بندی",
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    color = MaterialTheme.colorScheme.onBackground
+                                )
 
-                            ArticleContentRenderer(
-                                blocks = content.conclusion
-                            )
+                                ArticleContentRenderer(
+                                    blocks = content.conclusion
+                                )
+                            }
                         }
                     }
                 }
@@ -274,7 +276,6 @@ private fun ArticleHeader(
         )
     }
 }
-
 
 
 @Composable
@@ -367,7 +368,6 @@ private fun ArticleHeaderInfo(
         }
     }
 }
-
 
 
 @Composable
