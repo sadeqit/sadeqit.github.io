@@ -4,41 +4,43 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.LayoutCoordinates
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
@@ -46,13 +48,16 @@ import org.koin.compose.koinInject
 import sadeqit.github.io.domain.model.Article
 import sadeqit.github.io.domain.model.ArticleContent
 import sadeqit.github.io.domain.repository.ArticleRepository
+import sadeqit.github.io.presentation.components.AppFooter
 import sadeqit.github.io.presentation.components.article.ArticleContentRenderer
 import sadeqit.github.io.presentation.components.articles.ArticleTableOfContents
 import sadeqit.github.io.presentation.screens.home.HomeReveal
+import sadeqit.github.io.presentation.theme.AppBreakpoints
+import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.shared.generated.resources.Res
 import sadeqit.shared.generated.resources.article_clean_code
 import sadeqit.shared.generated.resources.article_kotlin_multiplatform
-import kotlin.math.roundToInt
+
 
 
 @Composable
@@ -75,104 +80,126 @@ fun ArticleDetailsScreen(
         mutableStateOf(true)
     }
 
-    val scrollState = rememberScrollState()
+    val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
-    val density = LocalDensity.current
-
-    var viewportCoordinates by remember {
-        mutableStateOf<LayoutCoordinates?>(null)
-    }
-
-    val sectionCoordinates = remember(articleContent) {
-        mutableMapOf<String, LayoutCoordinates>()
-    }
 
     LaunchedEffect(slug, articleRepository) {
         isLoading = true
         articleContent = articleRepository.getArticleContent(slug)
         isLoading = false
     }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(scrollState)
-            .onGloballyPositioned {
-                viewportCoordinates = it
-            }
-            .padding(horizontal = 24.dp, vertical = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+
+    BoxWithConstraints(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .widthIn(max = 960.dp)
-                .fillMaxWidth(),
+        val isMobile = maxWidth < AppBreakpoints.Mobile
+
+        val contentModifier = Modifier
+            .widthIn(max = 960.dp)
+            .fillMaxWidth()
+            .padding(horizontal = if (isMobile) 16.dp else 0.dp)
+
+        LazyColumn(
+            state = listState,
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
+            item(key = "top-spacer") {
+                Spacer(
+                    modifier = Modifier.height(AppDimensions.Space16)
+                )
+            }
+
             when {
                 article == null -> {
-                    Text(
-                        text = "مقاله مورد نظر پیدا نشد.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    item(key = "article-not-found") {
+                        Text(
+                            text = "مقاله مورد نظر پیدا نشد.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
                 }
 
                 isLoading -> {
-                    Text(
-                        text = "در حال بارگذاری مقاله...",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    item(key = "article-loading") {
+                        Text(
+                            text = "در حال بارگذاری مقاله...",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
                 }
 
                 articleContent == null -> {
-                    Text(
-                        text = "محتوای این مقاله در دسترس نیست.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    item(key = "article-content-unavailable") {
+                        Text(
+                            text = "محتوای این مقاله در دسترس نیست.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
                 }
 
                 else -> {
                     val content = articleContent!!
 
-                    ArticleHeader(article)
-
-                    ArticleContentRenderer(
-                        blocks = content.intro
-                    )
-
-                    ArticleTableOfContents(
-                        sections = content.sections,
-                        onSectionClick = { sectionId ->
-                            scope.launch {
-                                withFrameNanos { }
-
-                                val section = sectionCoordinates[sectionId]
-                                val viewport = viewportCoordinates
-
-                                if (section != null && viewport != null) {
-                                    val targetOffset = (
-                                            section.positionInRoot().y -
-                                                    viewport.positionInRoot().y -
-                                                    with(density) { 16.dp.toPx() }
-                                            ).roundToInt()
-                                        .coerceIn(0, scrollState.maxValue)
-
-                                    scrollState.animateScrollTo(targetOffset)
-                                }
-                            }
-                        }
-                    )
-
-                    content.sections.forEach { section ->
+                    item(key = "article-header") {
                         HomeReveal {
                             Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .onGloballyPositioned {
-                                        sectionCoordinates[section.id] = it
-                                    },
+                                modifier = contentModifier
+                            ) {
+                                ArticleHeader(article)
+                            }
+                        }
+                    }
+
+                    item(key = "article-intro") {
+                        HomeReveal {
+                            Column(
+                                modifier = contentModifier
+                            ) {
+                                ArticleContentRenderer(
+                                    blocks = content.intro
+                                )
+                            }
+                        }
+                    }
+
+                    item(key = "article-toc") {
+                        HomeReveal {
+                            Column(
+                                modifier = contentModifier
+                            ) {
+                                ArticleTableOfContents(
+                                    sections = content.sections,
+                                    onSectionClick = { sectionId ->
+                                        val sectionIndex =
+                                            content.sections.indexOfFirst {
+                                                it.id == sectionId
+                                            }
+
+                                        if (sectionIndex >= 0) {
+                                            scope.launch {
+                                                listState.animateScrollToItem(
+                                                    index = sectionIndex + 3
+                                                )
+                                            }
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    }
+
+                    items(
+                        items = content.sections,
+                        key = { section -> section.id }
+                    ) { section ->
+                        HomeReveal {
+                            Column(
+                                modifier = contentModifier,
                                 verticalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
                                 HorizontalDivider(
@@ -196,29 +223,43 @@ fun ArticleDetailsScreen(
                     }
 
                     if (content.conclusion.isNotEmpty()) {
-                        HomeReveal {
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                HorizontalDivider(
-                                    color = MaterialTheme.colorScheme.outlineVariant,
-                                    thickness = 2.dp
-                                )
+                        item(key = "article-conclusion") {
+                            HomeReveal {
+                                Column(
+                                    modifier = contentModifier,
+                                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                                ) {
+                                    HorizontalDivider(
+                                        color = MaterialTheme.colorScheme.outlineVariant,
+                                        thickness = 2.dp
+                                    )
 
-                                Spacer(Modifier.height(7.dp))
+                                    Spacer(Modifier.height(7.dp))
 
-                                Text(
-                                    text = "جمع‌بندی",
-                                    style = MaterialTheme.typography.headlineMedium,
-                                    color = MaterialTheme.colorScheme.onBackground
-                                )
+                                    Text(
+                                        text = "جمع‌بندی",
+                                        style = MaterialTheme.typography.headlineMedium,
+                                        color = MaterialTheme.colorScheme.onBackground
+                                    )
 
-                                ArticleContentRenderer(
-                                    blocks = content.conclusion
-                                )
+                                    ArticleContentRenderer(
+                                        blocks = content.conclusion
+                                    )
+                                }
                             }
                         }
+                    }
+                }
+            }
+
+            item(key = "app-footer") {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    CompositionLocalProvider(
+                        LocalLayoutDirection provides LayoutDirection.Ltr
+                    ) {
+                        AppFooter()
                     }
                 }
             }

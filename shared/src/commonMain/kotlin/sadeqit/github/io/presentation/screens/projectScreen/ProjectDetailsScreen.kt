@@ -40,7 +40,7 @@ fun ProjectDetailsScreen(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
-            top = 20.dp
+            top = 20.dp, bottom = 0.dp
             ),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -141,6 +141,7 @@ fun ProjectDetailsScreen(
                     }
                 }
             }
+
         }
     }
 }

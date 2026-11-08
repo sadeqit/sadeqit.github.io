@@ -18,12 +18,16 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import sadeqit.github.io.domain.repository.ProjectRepository
+import sadeqit.github.io.presentation.components.AppFooter
 import sadeqit.github.io.presentation.components.ProjectCard
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppDimensions
@@ -37,35 +41,31 @@ fun ProjectsScreen(
     val spacing = AppDimensions.Space24
 
     BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = AppDimensions.ContentPadding)
+        modifier = Modifier.fillMaxSize()
     ) {
         val isMobile = maxWidth < 600.dp
+        val columnCount = if (isMobile) 1 else 5
+        val contentWidth = maxWidth - AppDimensions.ContentPadding * 2
+        val cardWidth = (
+                contentWidth - spacing * (columnCount - 1)
+                ) / columnCount
 
-        val cardWidth = if (isMobile) 300.dp else 340.dp
-
-        val columnCount = if (isMobile) {
-            1
-        } else {
-            ((maxWidth + spacing) / (cardWidth + spacing))
-                .toInt()
-                .coerceAtLeast(1)
-        }
         val projectRows = projects.chunked(columnCount)
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
                 top = AppDimensions.Space32,
-                bottom = AppDimensions.Space48
+                bottom = 0.dp
             ),
-            verticalArrangement = Arrangement.spacedBy(spacing)
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Space8)
         ) {
-            item {
+            item(key = "projects-header") {
                 HomeReveal {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = AppDimensions.ContentPadding),
                         verticalArrangement = Arrangement.spacedBy(
                             AppDimensions.Space12
                         )
@@ -75,18 +75,24 @@ fun ProjectsScreen(
                             color = MaterialTheme.colorScheme.primary,
                             style = MaterialTheme.typography.labelLarge
                         )
+
                         Text(
                             text = "آنچه ساخته‌ام",
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold
                         )
+
                         Text(
-                            text = "ایده هایی که به محصول تبدیل شده اند؛ با تمرکز بر کیفیت و تجربه کاربری.",
+                            text = "ایده‌هایی که به محصول تبدیل شده‌اند؛ با تمرکز بر کیفیت و تجربه کاربری.",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.onBackground
                         )
-                        Spacer(modifier = Modifier.height(AppDimensions.Space8))
+
+                        Spacer(
+                            modifier = Modifier.height(AppDimensions.Space8)
+                        )
+
                         Text(
                             text = "پروژه‌ها",
                             style = MaterialTheme.typography.titleMedium,
@@ -109,9 +115,17 @@ fun ProjectsScreen(
             ) { index, row ->
                 HomeReveal {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(spacing)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = AppDimensions.ContentPadding),
+                        verticalArrangement = Arrangement.spacedBy(
+                            AppDimensions.Space16
+                        )
                     ) {
+                        Spacer(
+                            modifier = Modifier.height(AppDimensions.Space16)
+                        )
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(spacing)
@@ -140,11 +154,27 @@ fun ProjectsScreen(
                             }
                         }
 
+                        Spacer(
+                            modifier = Modifier.height(AppDimensions.Space16)
+                        )
+
                         if (index < projectRows.lastIndex) {
                             HorizontalDivider(
                                 color = MaterialTheme.colorScheme.outlineVariant
                             )
                         }
+                    }
+                }
+            }
+
+            item(key = "app-footer") {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    CompositionLocalProvider(
+                        LocalLayoutDirection provides LayoutDirection.Ltr
+                    ) {
+                        AppFooter()
                     }
                 }
             }

@@ -2,7 +2,9 @@ package sadeqit.github.io.presentation.components.article
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +35,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import sadeqit.github.io.domain.model.ArticleBlock
+import sadeqit.github.io.presentation.components.rememberHoverEffect
+import sadeqit.github.io.presentation.theme.AppDimensions
 
 @Composable
 fun ArticleCodeBlock(
@@ -53,15 +56,19 @@ fun ArticleCodeBlock(
         commentColor = colorScheme.onSurfaceVariant,
         numberColor = colorScheme.secondary
     )
+    val hoverEffect = rememberHoverEffect(
+        enableScale = false
+    )
 
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .hoverable(hoverEffect.interactionSource)
             .clip(RoundedCornerShape(12.dp))
             .background(colorScheme.surface)
             .border(
-                width = 1.dp,
-                color = colorScheme.outlineVariant,
+                width = AppDimensions.BorderThin,
+                brush = hoverEffect.borderBrush,
                 shape = RoundedCornerShape(12.dp)
             )
     ) {
@@ -127,39 +134,39 @@ fun ArticleCodeBlock(
         CompositionLocalProvider(
             LocalLayoutDirection provides LayoutDirection.Ltr
         ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(colorScheme.surface)
-                .padding(vertical = 14.dp)
-        ) {
-            if (block.showLineNumbers) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colorScheme.surface)
+                    .padding(vertical = 14.dp)
+            ) {
+                if (block.showLineNumbers) {
+                    Text(
+                        text = lineNumbers,
+                        modifier = Modifier.padding(
+                            start = 14.dp,
+                            end = 14.dp
+                        ),
+                        color = colorScheme.onSurfaceVariant.copy(alpha = 0.65f),
+                        fontFamily = FontFamily.Monospace,
+                        fontSize = 13.sp,
+                        lineHeight = 22.sp
+                    )
+                }
+
                 Text(
-                    text = lineNumbers,
-                    modifier = Modifier.padding(
-                        start = 14.dp,
-                        end = 14.dp
-                    ),
-                    color = colorScheme.onSurfaceVariant.copy(alpha = 0.65f),
+                    text = highlightedCode,
+                    modifier = Modifier
+                        .weight(1f)
+                        .horizontalScroll(rememberScrollState())
+                        .padding(end = 14.dp),
+                    color = colorScheme.onSurface,
                     fontFamily = FontFamily.Monospace,
                     fontSize = 13.sp,
-                    lineHeight = 22.sp
+                    lineHeight = 22.sp,
+                    softWrap = false
                 )
             }
-
-            Text(
-                text = highlightedCode,
-                modifier = Modifier
-                    .weight(1f)
-                    .horizontalScroll(rememberScrollState())
-                    .padding(end = 14.dp),
-                color = colorScheme.onSurface,
-                fontFamily = FontFamily.Monospace,
-                fontSize = 13.sp,
-                lineHeight = 22.sp,
-                softWrap = false
-            )
-        }
         }
     }
 }

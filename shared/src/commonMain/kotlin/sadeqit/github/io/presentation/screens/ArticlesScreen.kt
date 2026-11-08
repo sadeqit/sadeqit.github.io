@@ -18,13 +18,17 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import sadeqit.github.io.domain.repository.ArticleRepository
+import sadeqit.github.io.presentation.components.AppFooter
 import sadeqit.github.io.presentation.components.ArticleCard
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppDimensions
@@ -33,7 +37,6 @@ import sadeqit.github.io.presentation.theme.AppDimensions
 fun ArticlesScreen(
     onArticleClick: (String) -> Unit
 ) {
-
     val articleRepository = koinInject<ArticleRepository>()
     val articles = remember(articleRepository) {
         articleRepository.getArticles()
@@ -41,13 +44,14 @@ fun ArticlesScreen(
     val spacing = AppDimensions.Space24
 
     BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = AppDimensions.ContentPadding)
+        modifier = Modifier.fillMaxSize()
     ) {
         val isMobile = maxWidth < 600.dp
         val columnCount = if (isMobile) 1 else 5
-        val cardWidth = (maxWidth - spacing * (columnCount - 1)) / columnCount
+        val contentWidth = maxWidth - AppDimensions.ContentPadding * 2
+        val cardWidth = (
+                contentWidth - spacing * (columnCount - 1)
+                ) / columnCount
 
         val articleRows = articles.chunked(columnCount)
 
@@ -55,14 +59,16 @@ fun ArticlesScreen(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
                 top = AppDimensions.Space32,
-                bottom = AppDimensions.Space48
+                bottom = 0.dp
             ),
             verticalArrangement = Arrangement.spacedBy(AppDimensions.Space8)
         ) {
-            item {
+            item(key = "articles-header") {
                 HomeReveal {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = AppDimensions.ContentPadding),
                         verticalArrangement = Arrangement.spacedBy(
                             AppDimensions.Space12
                         )
@@ -105,8 +111,11 @@ fun ArticlesScreen(
             }
 
             if (articles.isEmpty()) {
-                item {
+                item(key = "empty-articles") {
                     Text(
+                        modifier = Modifier.padding(
+                            horizontal = AppDimensions.ContentPadding
+                        ),
                         text = "هنوز مقاله‌ای منتشر نشده است.",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onBackground
@@ -121,9 +130,14 @@ fun ArticlesScreen(
                 ) { index, row ->
                     HomeReveal {
                         Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(AppDimensions.Space16)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = AppDimensions.ContentPadding),
+                            verticalArrangement = Arrangement.spacedBy(
+                                AppDimensions.Space16
+                            )
                         ) {
+                            Spacer(Modifier.height(AppDimensions.Space16))
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.spacedBy(spacing)
@@ -149,6 +163,7 @@ fun ArticlesScreen(
                                     }
                                 }
                             }
+                            Spacer(Modifier.height(AppDimensions.Space16))
 
                             if (index < articleRows.lastIndex) {
                                 HorizontalDivider(
@@ -156,6 +171,18 @@ fun ArticlesScreen(
                                 )
                             }
                         }
+                    }
+                }
+            }
+
+            item(key = "app-footer") {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    CompositionLocalProvider(
+                        LocalLayoutDirection provides LayoutDirection.Ltr
+                    ) {
+                        AppFooter()
                     }
                 }
             }

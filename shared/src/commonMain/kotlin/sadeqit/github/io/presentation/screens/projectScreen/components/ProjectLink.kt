@@ -48,7 +48,7 @@ fun ProjectLink(
             brush = hoverEffect.borderBrush
         ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Row(
