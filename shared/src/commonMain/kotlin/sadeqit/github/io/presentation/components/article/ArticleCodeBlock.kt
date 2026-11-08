@@ -18,16 +18,19 @@ import androidx.compose.foundation.clickable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import sadeqit.github.io.domain.model.ArticleBlock
@@ -121,6 +124,9 @@ fun ArticleCodeBlock(
             )
         }
 
+        CompositionLocalProvider(
+            LocalLayoutDirection provides LayoutDirection.Ltr
+        ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -153,6 +159,7 @@ fun ArticleCodeBlock(
                 lineHeight = 22.sp,
                 softWrap = false
             )
+        }
         }
     }
 }
