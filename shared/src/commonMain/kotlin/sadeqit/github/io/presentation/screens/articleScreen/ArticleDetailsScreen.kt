@@ -50,15 +50,13 @@ import sadeqit.github.io.domain.model.ArticleContent
 import sadeqit.github.io.domain.repository.ArticleRepository
 import sadeqit.github.io.presentation.components.AppFooter
 import sadeqit.github.io.presentation.components.article.ArticleContentRenderer
-import sadeqit.github.io.presentation.components.articles.ArticleTableOfContents
+import sadeqit.github.io.presentation.components.article.ArticleTableOfContents
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppBreakpoints
 import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.shared.generated.resources.Res
 import sadeqit.shared.generated.resources.article_clean_code
 import sadeqit.shared.generated.resources.article_kotlin_multiplatform
-
-
 
 @Composable
 fun ArticleDetailsScreen(
@@ -183,7 +181,7 @@ fun ArticleDetailsScreen(
                                         if (sectionIndex >= 0) {
                                             scope.launch {
                                                 listState.animateScrollToItem(
-                                                    index = sectionIndex + 3
+                                                    index = sectionIndex + 4
                                                 )
                                             }
                                         }

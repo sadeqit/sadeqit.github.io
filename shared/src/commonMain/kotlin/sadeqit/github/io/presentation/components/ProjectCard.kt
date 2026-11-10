@@ -157,7 +157,7 @@ fun ProjectCard(
                     color = MaterialTheme.colorScheme.outlineVariant
                 )
 
-                // Footer
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

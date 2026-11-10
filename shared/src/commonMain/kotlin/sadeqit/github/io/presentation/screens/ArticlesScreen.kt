@@ -74,12 +74,6 @@ fun ArticlesScreen(
                         )
                     ) {
                         Text(
-                            text = "ARTICLES",
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.labelLarge
-                        )
-
-                        Text(
                             text = "مقالات",
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onBackground,

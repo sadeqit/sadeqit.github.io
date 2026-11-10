@@ -107,7 +107,11 @@ fun AppNavigation(
                 ArticleDetailsScreen(slug = route.slug)
             }
 
-            AppRoute.Resume -> ResumeScreen()
+            AppRoute.Resume -> ResumeScreen(
+                onProjectClick = { projectId ->
+                    navigateTo(AppRoute.ProjectDetails(projectId))
+                },
+            )
             AppRoute.About -> AboutScreen()
             AppRoute.Contact -> ContactScreen()
 

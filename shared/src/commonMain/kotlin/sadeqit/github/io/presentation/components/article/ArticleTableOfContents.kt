@@ -1,4 +1,4 @@
-package sadeqit.github.io.presentation.components.articles
+package sadeqit.github.io.presentation.components.article
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize

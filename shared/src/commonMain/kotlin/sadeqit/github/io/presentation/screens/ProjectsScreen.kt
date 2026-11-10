@@ -71,12 +71,6 @@ fun ProjectsScreen(
                         )
                     ) {
                         Text(
-                            text = "PORTFOLIO",
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.labelLarge
-                        )
-
-                        Text(
                             text = "آنچه ساخته‌ام",
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onBackground,
