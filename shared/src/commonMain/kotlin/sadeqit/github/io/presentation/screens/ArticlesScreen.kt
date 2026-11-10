@@ -34,7 +34,6 @@ import sadeqit.github.io.presentation.components.ArticleCard
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppDimensions
 
-
 @Composable
 fun ArticlesScreen(
     onArticleClick: (String) -> Unit

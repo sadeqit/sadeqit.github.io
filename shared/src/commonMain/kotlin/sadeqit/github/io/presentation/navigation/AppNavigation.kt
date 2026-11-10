@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import org.koin.compose.koinInject
+import sadeqit.github.io.data.content.resumeContent
 import sadeqit.github.io.domain.repository.ProjectRepository
 import sadeqit.github.io.presentation.components.AppShell
 import sadeqit.github.io.presentation.screens.AboutScreen
@@ -112,7 +113,11 @@ fun AppNavigation(
                     navigateTo(AppRoute.ProjectDetails(projectId))
                 },
             )
-            AppRoute.About -> AboutScreen()
+            AppRoute.About -> AboutScreen(
+                onContactClick = {
+                    navigateTo(AppRoute.Contact)
+                }
+            )
             AppRoute.Contact -> ContactScreen()
 
             AppRoute.NotFound -> NotFoundScreen(

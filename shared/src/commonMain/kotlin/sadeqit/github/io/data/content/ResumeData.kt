@@ -106,7 +106,7 @@ val resumeContent = ResumeContent(
 
     experiences = listOf(
         ResumeExperience(
-            title = "توسعه‌دهنده مستقل اندروید - از سال 1400 تا کنون",
+            title = "توسعه‌دهنده مستقل اندروید - از سال ۱۴۰۰ تا کنون",
             description = """
             🔹توسعه و انتشار مستقل اپلیکیشن‌های اندرویدی با Kotlin
             

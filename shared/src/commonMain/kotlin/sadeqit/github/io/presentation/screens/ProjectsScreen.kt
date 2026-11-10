@@ -35,7 +35,6 @@ import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppBreakpoints
 import sadeqit.github.io.presentation.theme.AppDimensions
 
-
 @Composable
 fun ProjectsScreen(
     onProjectClick: (String) -> Unit

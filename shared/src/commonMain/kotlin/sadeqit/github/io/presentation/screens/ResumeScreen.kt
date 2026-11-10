@@ -43,7 +43,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
-import sadeqit.github.io.domain.model.ResumeProject
 import sadeqit.github.io.domain.model.ResumeSocialLink
 import sadeqit.github.io.domain.repository.ResumeRepository
 import sadeqit.github.io.presentation.components.AppFooter
