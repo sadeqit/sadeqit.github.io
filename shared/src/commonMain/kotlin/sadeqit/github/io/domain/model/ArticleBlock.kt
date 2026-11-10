@@ -1,4 +1,3 @@
-
 package sadeqit.github.io.domain.model
 
 /**

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
@@ -33,6 +34,7 @@ import sadeqit.github.io.presentation.components.ArticleCard
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppDimensions
 
+
 @Composable
 fun ArticlesScreen(
     onArticleClick: (String) -> Unit
@@ -41,17 +43,23 @@ fun ArticlesScreen(
     val articles = remember(articleRepository) {
         articleRepository.getArticles()
     }
+
     val spacing = AppDimensions.Space24
 
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize()
     ) {
         val isMobile = maxWidth < 600.dp
-        val columnCount = if (isMobile) 1 else 5
-        val contentWidth = maxWidth - AppDimensions.ContentPadding * 2
-        val cardWidth = (
-                contentWidth - spacing * (columnCount - 1)
-                ) / columnCount
+        val columnCount = if (isMobile) 1 else 3
+
+        val horizontalPadding = if (isMobile) 16.dp else 0.dp
+
+        val contentModifier = Modifier
+            .widthIn(max = 1250.dp)
+            .fillMaxWidth()
+            .padding(horizontal = horizontalPadding)
+
+        val cardWidth = if (isMobile) 380.dp else 400.dp
 
         val articleRows = articles.chunked(columnCount)
 
@@ -61,14 +69,15 @@ fun ArticlesScreen(
                 top = AppDimensions.Space32,
                 bottom = 0.dp
             ),
-            verticalArrangement = Arrangement.spacedBy(AppDimensions.Space8)
+            verticalArrangement = Arrangement.spacedBy(
+                AppDimensions.Space8
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item(key = "articles-header") {
                 HomeReveal {
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = AppDimensions.ContentPadding),
+                        modifier = contentModifier,
                         verticalArrangement = Arrangement.spacedBy(
                             AppDimensions.Space12
                         )
@@ -106,14 +115,15 @@ fun ArticlesScreen(
 
             if (articles.isEmpty()) {
                 item(key = "empty-articles") {
-                    Text(
-                        modifier = Modifier.padding(
-                            horizontal = AppDimensions.ContentPadding
-                        ),
-                        text = "هنوز مقاله‌ای منتشر نشده است.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    Box(
+                        modifier = contentModifier
+                    ) {
+                        Text(
+                            text = "هنوز مقاله‌ای منتشر نشده است.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
                 }
             } else {
                 itemsIndexed(
@@ -124,42 +134,40 @@ fun ArticlesScreen(
                 ) { index, row ->
                     HomeReveal {
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = AppDimensions.ContentPadding),
+                            modifier = contentModifier,
                             verticalArrangement = Arrangement.spacedBy(
                                 AppDimensions.Space16
                             )
                         ) {
-                            Spacer(Modifier.height(AppDimensions.Space16))
+                            Spacer(
+                                modifier = Modifier.height(
+                                    AppDimensions.Space16
+                                )
+                            )
+
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(spacing)
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    spacing,
+                                    Alignment.CenterHorizontally
+                                )
                             ) {
                                 row.forEach { article ->
-                                    Box(
-                                        modifier = Modifier.weight(1f),
-                                        contentAlignment = Alignment.TopCenter
-                                    ) {
-                                        ArticleCard(
-                                            modifier = Modifier.width(cardWidth),
-                                            article = article,
-                                            onClick = onArticleClick
-                                        )
-                                    }
-                                }
-
-                                if (row.size < columnCount) {
-                                    repeat(columnCount - row.size) {
-                                        Spacer(
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                    }
+                                    ArticleCard(
+                                        modifier = Modifier.width(cardWidth),
+                                        article = article,
+                                        onClick = onArticleClick
+                                    )
                                 }
                             }
-                            Spacer(Modifier.height(AppDimensions.Space16))
 
                             if (index < articleRows.lastIndex) {
+                                Spacer(
+                                    modifier = Modifier.height(
+                                        AppDimensions.Space16
+                                    )
+                                )
+
                                 HorizontalDivider(
                                     color = MaterialTheme.colorScheme.outlineVariant
                                 )
@@ -167,6 +175,12 @@ fun ArticlesScreen(
                         }
                     }
                 }
+            }
+
+            item {
+                Spacer(
+                    modifier = Modifier.height(AppDimensions.Space24)
+                )
             }
 
             item(key = "app-footer") {

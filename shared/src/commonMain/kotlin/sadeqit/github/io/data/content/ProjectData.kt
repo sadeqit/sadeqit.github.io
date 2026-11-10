@@ -197,6 +197,294 @@ internal val projectData = listOf(
             "desktop-home.png"
         )
     ),
+    Project(
+        id = "weatherino1",
+        title = "ودرینو",
+        description = "هواشناسی هوشمند؛ ساخته شده با KMP و طراحی Glassmorphism",
+        thumbnail = "weatherino.png",
+        technologies = listOf(
+            "Kotlin",
+            "Kotlin Multiplatform",
+            "Compose Multiplatform",
+            "Ktor",
+            "Koin",
+            "SQLDelight"
+        ),
+        status = "Completed",
+        githubUrl = "https://github.com/sadeqit/weatherino",
+        appUrl = "https://cafebazaar.ir/app/io.github.sadeqit.weatherino",
+        featured = true,
+        order = 2,
+        projectType = ProjectType.KMP,
+        releaseType = ProjectReleaseType.Released,
+
+        // Project Details
+        fullDescription = """
+        Weatherino یک اپلیکیشن هواشناسی چندسکویی است که با Kotlin Multiplatform و Compose Multiplatform توسعه داده شده است.
+        این برنامه اطلاعات آب‌وهوای فعلی، پیش‌بینی وضعیت هوا و کیفیت هوا را در اختیار کاربران قرار می‌دهد. همچنین امکان جستجوی شهرها، دریافت اطلاعات موقعیت مکانی و نگهداری داده‌ها به‌صورت محلی را فراهم می‌کند.
+        تمرکز اصلی پروژه بر اشتراک‌گذاری منطق و رابط کاربری بین پلتفرم‌ها، معماری قابل نگهداری و ارائه تجربه کاربری یکپارچه بوده است.
+    """.trimIndent(),
+
+        goals = listOf(
+            "توسعه یک اپلیکیشن هواشناسی با قابلیت اجرا روی چند پلتفرم",
+            "اشتراک‌ گذاری منطق کسب‌وکار و رابط کاربری با Kotlin Multiplatform",
+            "ارائه اطلاعات دقیق آب‌وهوا و کیفیت هوا",
+            "افزایش پایداری تجربه کاربری با ذخیره‌سازی محلی و پشتیبانی از داده‌های کش‌شده",
+            "طراحی رابط کاربری مدرن و یکپارچه با Compose Multiplatform"
+        ),
+
+        features = listOf(
+            "نمایش وضعیت فعلی آب‌وهوا",
+            "پیش‌بینی وضعیت آب‌وهوا",
+            "نمایش شاخص کیفیت هوا (AQI)",
+            "جستجو و انتخاب شهر",
+            "دریافت اطلاعات آب‌وهوا بر اساس موقعیت مکانی در Android",
+            "ذخیره محلی اطلاعات آب‌وهوا، پیش‌بینی و کیفیت هوا",
+            "ذخیره شهر انتخاب‌شده کاربر",
+            "نمایش جزئیاتی مانند دما، رطوبت، سرعت باد، فشار و میزان دید",
+            "نمایش زمان طلوع و غروب خورشید",
+            "رابط کاربری با الهام از سبک Glassmorphism",
+            "پشتیبانی از رابط کاربری راست‌چین"
+        ),
+
+        platforms = listOf(
+            "Android",
+            "Desktop",
+            "Web",
+        ),
+
+        architecture = """
+        Weatherino از معماری Clean Architecture و الگوی MVVM استفاده می‌کند.
+        لایه Presentation مسئول رابط کاربری و ViewModelها است. لایه Domain مدل‌ها، Repositoryها و Use Caseها را مدیریت می‌کند. لایه Data نیز ارتباط با سرویس OpenWeatherMap و ذخیره‌سازی محلی را بر عهده دارد.
+        برای دریافت اطلاعات از Ktor، برای مدیریت وابستگی‌ها از Koin و برای ذخیره‌سازی داده‌های هواشناسی از SQLDelight استفاده شده است.
+        بخش عمده منطق برنامه و رابط کاربری در ماژول shared قرار دارد و پیاده‌سازی قابلیت‌های وابسته به پلتفرم در Source Setهای مربوط به همان پلتفرم انجام می‌شود.
+    """.trimIndent(),
+
+        challenges = listOf(
+            ProjectChallenge(
+                title = "مدیریت وابستگی‌ها در معماری چندسکویی",
+                problem = "مدیریت وابستگی‌های مشترک و وابستگی‌های اختصاصی هر پلتفرم در ساختار Kotlin Multiplatform.",
+                solution = "استفاده از Koin برای مدیریت Dependency Injection در بخش مشترک و پیاده‌سازی وابستگی‌های اختصاصی در بخش‌های پلتفرمی."
+            ),
+            ProjectChallenge(
+                title = "ذخیره‌سازی محلی اطلاعات آب‌وهوا",
+                problem = "نیاز به نگهداری اطلاعات دریافت‌شده برای دسترسی سریع‌تر و استفاده از داده‌ها در شرایط قطع ارتباط اینترنت.",
+                solution = "استفاده از SQLDelight برای ذخیره اطلاعات آب‌وهوا، پیش‌بینی و کیفیت هوا و Multiplatform Settings برای نگهداری شهر انتخاب‌شده."
+            ),
+            ProjectChallenge(
+                title = "پیاده‌سازی قابلیت‌های وابسته به پلتفرم",
+                problem = "دسترسی به قابلیت‌هایی مانند موقعیت مکانی در محیط‌های اجرایی متفاوت.",
+                solution = "استفاده از پیاده‌سازی اختصاصی هر پلتفرم؛ از جمله Google Play Services Location در Android."
+            ),
+            ProjectChallenge(
+                title = "تبدیل پاسخ‌های API به مدل‌های دامنه",
+                problem = "مدیریت ساختار پاسخ‌های مختلف OpenWeatherMap و جلوگیری از وابستگی لایه‌های اصلی برنامه به مدل‌های شبکه.",
+                solution = "استفاده از DTOها و تبدیل آن‌ها به مدل‌های Domain در لایه Data."
+            )
+        ),
+
+        screenshots = listOf(
+            "android-home.jpg",
+            "android-forecast.jpg",
+            "android-air-quality.jpg",
+            "android-city-selection.jpg",
+            "android-drawer.jpg",
+            "android-settings.jpg",
+            "desktop-home.png"
+        )
+    ),
+    Project(
+        id = "weatherino2",
+        title = "ودرینو",
+        description = "هواشناسی هوشمند؛ ساخته شده با KMP و طراحی Glassmorphism",
+        thumbnail = "weatherino.png",
+        technologies = listOf(
+            "Kotlin",
+            "Kotlin Multiplatform",
+            "Compose Multiplatform",
+            "Ktor",
+            "Koin",
+            "SQLDelight"
+        ),
+        status = "Completed",
+        githubUrl = "https://github.com/sadeqit/weatherino",
+        appUrl = "https://cafebazaar.ir/app/io.github.sadeqit.weatherino",
+        featured = true,
+        order = 2,
+        projectType = ProjectType.KMP,
+        releaseType = ProjectReleaseType.Released,
+
+        // Project Details
+        fullDescription = """
+        Weatherino یک اپلیکیشن هواشناسی چندسکویی است که با Kotlin Multiplatform و Compose Multiplatform توسعه داده شده است.
+        این برنامه اطلاعات آب‌وهوای فعلی، پیش‌بینی وضعیت هوا و کیفیت هوا را در اختیار کاربران قرار می‌دهد. همچنین امکان جستجوی شهرها، دریافت اطلاعات موقعیت مکانی و نگهداری داده‌ها به‌صورت محلی را فراهم می‌کند.
+        تمرکز اصلی پروژه بر اشتراک‌گذاری منطق و رابط کاربری بین پلتفرم‌ها، معماری قابل نگهداری و ارائه تجربه کاربری یکپارچه بوده است.
+    """.trimIndent(),
+
+        goals = listOf(
+            "توسعه یک اپلیکیشن هواشناسی با قابلیت اجرا روی چند پلتفرم",
+            "اشتراک‌ گذاری منطق کسب‌وکار و رابط کاربری با Kotlin Multiplatform",
+            "ارائه اطلاعات دقیق آب‌وهوا و کیفیت هوا",
+            "افزایش پایداری تجربه کاربری با ذخیره‌سازی محلی و پشتیبانی از داده‌های کش‌شده",
+            "طراحی رابط کاربری مدرن و یکپارچه با Compose Multiplatform"
+        ),
+
+        features = listOf(
+            "نمایش وضعیت فعلی آب‌وهوا",
+            "پیش‌بینی وضعیت آب‌وهوا",
+            "نمایش شاخص کیفیت هوا (AQI)",
+            "جستجو و انتخاب شهر",
+            "دریافت اطلاعات آب‌وهوا بر اساس موقعیت مکانی در Android",
+            "ذخیره محلی اطلاعات آب‌وهوا، پیش‌بینی و کیفیت هوا",
+            "ذخیره شهر انتخاب‌شده کاربر",
+            "نمایش جزئیاتی مانند دما، رطوبت، سرعت باد، فشار و میزان دید",
+            "نمایش زمان طلوع و غروب خورشید",
+            "رابط کاربری با الهام از سبک Glassmorphism",
+            "پشتیبانی از رابط کاربری راست‌چین"
+        ),
+
+        platforms = listOf(
+            "Android",
+            "Desktop",
+            "Web",
+        ),
+
+        architecture = """
+        Weatherino از معماری Clean Architecture و الگوی MVVM استفاده می‌کند.
+        لایه Presentation مسئول رابط کاربری و ViewModelها است. لایه Domain مدل‌ها، Repositoryها و Use Caseها را مدیریت می‌کند. لایه Data نیز ارتباط با سرویس OpenWeatherMap و ذخیره‌سازی محلی را بر عهده دارد.
+        برای دریافت اطلاعات از Ktor، برای مدیریت وابستگی‌ها از Koin و برای ذخیره‌سازی داده‌های هواشناسی از SQLDelight استفاده شده است.
+        بخش عمده منطق برنامه و رابط کاربری در ماژول shared قرار دارد و پیاده‌سازی قابلیت‌های وابسته به پلتفرم در Source Setهای مربوط به همان پلتفرم انجام می‌شود.
+    """.trimIndent(),
+
+        challenges = listOf(
+            ProjectChallenge(
+                title = "مدیریت وابستگی‌ها در معماری چندسکویی",
+                problem = "مدیریت وابستگی‌های مشترک و وابستگی‌های اختصاصی هر پلتفرم در ساختار Kotlin Multiplatform.",
+                solution = "استفاده از Koin برای مدیریت Dependency Injection در بخش مشترک و پیاده‌سازی وابستگی‌های اختصاصی در بخش‌های پلتفرمی."
+            ),
+            ProjectChallenge(
+                title = "ذخیره‌سازی محلی اطلاعات آب‌وهوا",
+                problem = "نیاز به نگهداری اطلاعات دریافت‌شده برای دسترسی سریع‌تر و استفاده از داده‌ها در شرایط قطع ارتباط اینترنت.",
+                solution = "استفاده از SQLDelight برای ذخیره اطلاعات آب‌وهوا، پیش‌بینی و کیفیت هوا و Multiplatform Settings برای نگهداری شهر انتخاب‌شده."
+            ),
+            ProjectChallenge(
+                title = "پیاده‌سازی قابلیت‌های وابسته به پلتفرم",
+                problem = "دسترسی به قابلیت‌هایی مانند موقعیت مکانی در محیط‌های اجرایی متفاوت.",
+                solution = "استفاده از پیاده‌سازی اختصاصی هر پلتفرم؛ از جمله Google Play Services Location در Android."
+            ),
+            ProjectChallenge(
+                title = "تبدیل پاسخ‌های API به مدل‌های دامنه",
+                problem = "مدیریت ساختار پاسخ‌های مختلف OpenWeatherMap و جلوگیری از وابستگی لایه‌های اصلی برنامه به مدل‌های شبکه.",
+                solution = "استفاده از DTOها و تبدیل آن‌ها به مدل‌های Domain در لایه Data."
+            )
+        ),
+
+        screenshots = listOf(
+            "android-home.jpg",
+            "android-forecast.jpg",
+            "android-air-quality.jpg",
+            "android-city-selection.jpg",
+            "android-drawer.jpg",
+            "android-settings.jpg",
+            "desktop-home.png"
+        )
+    ),
+    Project(
+        id = "weatherino3",
+        title = "ودرینو",
+        description = "هواشناسی هوشمند؛ ساخته شده با KMP و طراحی Glassmorphism",
+        thumbnail = "weatherino.png",
+        technologies = listOf(
+            "Kotlin",
+            "Kotlin Multiplatform",
+            "Compose Multiplatform",
+            "Ktor",
+            "Koin",
+            "SQLDelight"
+        ),
+        status = "Completed",
+        githubUrl = "https://github.com/sadeqit/weatherino",
+        appUrl = "https://cafebazaar.ir/app/io.github.sadeqit.weatherino",
+        featured = true,
+        order = 2,
+        projectType = ProjectType.KMP,
+        releaseType = ProjectReleaseType.Released,
+
+        // Project Details
+        fullDescription = """
+        Weatherino یک اپلیکیشن هواشناسی چندسکویی است که با Kotlin Multiplatform و Compose Multiplatform توسعه داده شده است.
+        این برنامه اطلاعات آب‌وهوای فعلی، پیش‌بینی وضعیت هوا و کیفیت هوا را در اختیار کاربران قرار می‌دهد. همچنین امکان جستجوی شهرها، دریافت اطلاعات موقعیت مکانی و نگهداری داده‌ها به‌صورت محلی را فراهم می‌کند.
+        تمرکز اصلی پروژه بر اشتراک‌گذاری منطق و رابط کاربری بین پلتفرم‌ها، معماری قابل نگهداری و ارائه تجربه کاربری یکپارچه بوده است.
+    """.trimIndent(),
+
+        goals = listOf(
+            "توسعه یک اپلیکیشن هواشناسی با قابلیت اجرا روی چند پلتفرم",
+            "اشتراک‌ گذاری منطق کسب‌وکار و رابط کاربری با Kotlin Multiplatform",
+            "ارائه اطلاعات دقیق آب‌وهوا و کیفیت هوا",
+            "افزایش پایداری تجربه کاربری با ذخیره‌سازی محلی و پشتیبانی از داده‌های کش‌شده",
+            "طراحی رابط کاربری مدرن و یکپارچه با Compose Multiplatform"
+        ),
+
+        features = listOf(
+            "نمایش وضعیت فعلی آب‌وهوا",
+            "پیش‌بینی وضعیت آب‌وهوا",
+            "نمایش شاخص کیفیت هوا (AQI)",
+            "جستجو و انتخاب شهر",
+            "دریافت اطلاعات آب‌وهوا بر اساس موقعیت مکانی در Android",
+            "ذخیره محلی اطلاعات آب‌وهوا، پیش‌بینی و کیفیت هوا",
+            "ذخیره شهر انتخاب‌شده کاربر",
+            "نمایش جزئیاتی مانند دما، رطوبت، سرعت باد، فشار و میزان دید",
+            "نمایش زمان طلوع و غروب خورشید",
+            "رابط کاربری با الهام از سبک Glassmorphism",
+            "پشتیبانی از رابط کاربری راست‌چین"
+        ),
+
+        platforms = listOf(
+            "Android",
+            "Desktop",
+            "Web",
+        ),
+
+        architecture = """
+        Weatherino از معماری Clean Architecture و الگوی MVVM استفاده می‌کند.
+        لایه Presentation مسئول رابط کاربری و ViewModelها است. لایه Domain مدل‌ها، Repositoryها و Use Caseها را مدیریت می‌کند. لایه Data نیز ارتباط با سرویس OpenWeatherMap و ذخیره‌سازی محلی را بر عهده دارد.
+        برای دریافت اطلاعات از Ktor، برای مدیریت وابستگی‌ها از Koin و برای ذخیره‌سازی داده‌های هواشناسی از SQLDelight استفاده شده است.
+        بخش عمده منطق برنامه و رابط کاربری در ماژول shared قرار دارد و پیاده‌سازی قابلیت‌های وابسته به پلتفرم در Source Setهای مربوط به همان پلتفرم انجام می‌شود.
+    """.trimIndent(),
+
+        challenges = listOf(
+            ProjectChallenge(
+                title = "مدیریت وابستگی‌ها در معماری چندسکویی",
+                problem = "مدیریت وابستگی‌های مشترک و وابستگی‌های اختصاصی هر پلتفرم در ساختار Kotlin Multiplatform.",
+                solution = "استفاده از Koin برای مدیریت Dependency Injection در بخش مشترک و پیاده‌سازی وابستگی‌های اختصاصی در بخش‌های پلتفرمی."
+            ),
+            ProjectChallenge(
+                title = "ذخیره‌سازی محلی اطلاعات آب‌وهوا",
+                problem = "نیاز به نگهداری اطلاعات دریافت‌شده برای دسترسی سریع‌تر و استفاده از داده‌ها در شرایط قطع ارتباط اینترنت.",
+                solution = "استفاده از SQLDelight برای ذخیره اطلاعات آب‌وهوا، پیش‌بینی و کیفیت هوا و Multiplatform Settings برای نگهداری شهر انتخاب‌شده."
+            ),
+            ProjectChallenge(
+                title = "پیاده‌سازی قابلیت‌های وابسته به پلتفرم",
+                problem = "دسترسی به قابلیت‌هایی مانند موقعیت مکانی در محیط‌های اجرایی متفاوت.",
+                solution = "استفاده از پیاده‌سازی اختصاصی هر پلتفرم؛ از جمله Google Play Services Location در Android."
+            ),
+            ProjectChallenge(
+                title = "تبدیل پاسخ‌های API به مدل‌های دامنه",
+                problem = "مدیریت ساختار پاسخ‌های مختلف OpenWeatherMap و جلوگیری از وابستگی لایه‌های اصلی برنامه به مدل‌های شبکه.",
+                solution = "استفاده از DTOها و تبدیل آن‌ها به مدل‌های Domain در لایه Data."
+            )
+        ),
+
+        screenshots = listOf(
+            "android-home.jpg",
+            "android-forecast.jpg",
+            "android-air-quality.jpg",
+            "android-city-selection.jpg",
+            "android-drawer.jpg",
+            "android-settings.jpg",
+            "desktop-home.png"
+        )
+    ),
 
 
 )

@@ -49,6 +49,51 @@ internal val articleData = listOf(
         readTime = 4,
         slug = "clean-architecture",
         featured = true
-    )
+    ),
+    Article(
+        id = "clean-architecture1",
+        title = "آشنایی با Clean Architecture",
+        excerpt = "بررسی اصول معماری Clean Architecture و جداسازی مسئولیت‌ها در پروژه‌های نرم‌افزاری.",
+        cover = "article_clean_code",
+        tags = listOf(
+            "Kotlin",
+            "Clean Architecture",
+            "Software Architecture"
+        ),
+        date = "2026-11-07",
+        readTime = 4,
+        slug = "clean-architecture",
+        featured = true
+    ),
+    Article(
+        id = "clean-architecture2",
+        title = "آشنایی با Clean Architecture",
+        excerpt = "بررسی اصول معماری Clean Architecture و جداسازی مسئولیت‌ها در پروژه‌های نرم‌افزاری.",
+        cover = "article_clean_code",
+        tags = listOf(
+            "Kotlin",
+            "Clean Architecture",
+            "Software Architecture"
+        ),
+        date = "2026-11-07",
+        readTime = 4,
+        slug = "clean-architecture",
+        featured = true
+    ),
+    Article(
+        id = "clean-architecture3",
+        title = "آشنایی با Clean Architecture",
+        excerpt = "بررسی اصول معماری Clean Architecture و جداسازی مسئولیت‌ها در پروژه‌های نرم‌افزاری.",
+        cover = "article_clean_code",
+        tags = listOf(
+            "Kotlin",
+            "Clean Architecture",
+            "Software Architecture"
+        ),
+        date = "2026-11-07",
+        readTime = 4,
+        slug = "clean-architecture",
+        featured = true
+    ),
 
 )

@@ -73,7 +73,7 @@ fun ResumeScreen(
         val isMobile = maxWidth < AppBreakpoints.Mobile
 
         val contentModifier = Modifier
-            .widthIn(max = 960.dp)
+            .widthIn(max = 1100.dp)
             .fillMaxWidth()
             .padding(horizontal = if (isMobile) 16.dp else 0.dp)
 
@@ -346,8 +346,7 @@ private fun SocialLinkItem(
 private fun ResumeSection(
     title: String,
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit,
-) {
+    content: @Composable ColumnScope.() -> Unit, ) {
     val hoverEffect = rememberHoverEffect(enableScale = false)
 
     Column(
