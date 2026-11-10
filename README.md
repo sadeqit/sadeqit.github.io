@@ -1,35 +1,59 @@
-This is a Kotlin Multiplatform project targeting Web.
+# SADEGH IT
 
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
+**Personal Portfolio | Android & Kotlin Multiplatform Developer**
 
-### Running the apps
+Welcome to my personal portfolio repository.
 
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
+This website is a showcase of my work, technical interests, and professional background as an Android and Kotlin Multiplatform developer.
 
-- Web app:
-  - Wasm target (faster, modern browsers): `./gradlew :webApp:wasmJsBrowserDevelopmentRun`
-  - JS target (slower, supports older browsers): `./gradlew :webApp:jsBrowserDevelopmentRun`
+## About Me
 
-### Running tests
+I'm a software developer passionate about building modern applications with Kotlin and creating clean, maintainable, and user-friendly experiences.
 
-Use the run button in your IDE's editor gutter, or run tests using Gradle tasks:
+My main areas of interest include:
 
-- Web tests:
-  - Wasm target: `./gradlew :shared:wasmJsTest`
-  - JS target: `./gradlew :shared:jsTest`
+- Android Development
+- Kotlin Multiplatform
+- Jetpack Compose
+- Compose Multiplatform
+- Clean Architecture and MVVM
+- Coroutines and Flow
+
+## Featured Projects
+
+Explore my projects, including:
+
+- **Weatherino** – A weather application.
+- **Sadegh Dream** – A personal project.
+- **Online Shop** – A practice project.
+
+Visit the website to learn more about each project, its features, technologies, and implementation.
+
+## Website Sections
+
+- **Home** – Introduction and overview.
+- **Projects** – Selected projects and their details.
+- **Articles** – Technical articles and development insights.
+- **Resume** – Professional background and technical skills.
+- **About** – More about me and my interests.
+- **Contact** – Ways to get in touch.
+
+## Technologies
+
+- Kotlin
+- Kotlin Multiplatform
+- Compose Multiplatform
+- Kotlin/Wasm
+- Kotlin/JS
+- Koin
+- Coil
+- Markdown
+
+## Links
+
+- **Portfolio:** https://sadeqit.github.io
+- **GitHub:** https://github.com/sadeqit
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://kotlinlang.org/compose-multiplatform/),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
-
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+© 2026 SADEGH IT
