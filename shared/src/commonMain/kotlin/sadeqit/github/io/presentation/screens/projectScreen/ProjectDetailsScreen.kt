@@ -16,7 +16,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import sadeqit.github.io.domain.model.Project
-import sadeqit.github.io.presentation.components.AppFooter
+import sadeqit.github.io.presentation.components.app.AppFooter
 import sadeqit.github.io.presentation.screens.projectScreen.sections.ProjectArchitectureSection
 import sadeqit.github.io.presentation.screens.projectScreen.sections.ProjectChallengesSection
 import sadeqit.github.io.presentation.screens.projectScreen.sections.ProjectFeaturesSection

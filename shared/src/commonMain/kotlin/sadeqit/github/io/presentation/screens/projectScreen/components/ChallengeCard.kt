@@ -1,14 +1,10 @@
 package sadeqit.github.io.presentation.screens.projectScreen.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,8 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import sadeqit.github.io.domain.model.ProjectChallenge
-import sadeqit.github.io.presentation.components.rememberHoverEffect
-import sadeqit.github.io.presentation.theme.AppDimensions
+import sadeqit.github.io.presentation.components.card.HoverCard
 
 @Composable
 fun ChallengeCard(
@@ -25,22 +20,11 @@ fun ChallengeCard(
     index: Int,
     challenge: ProjectChallenge
 ) {
-    val hoverEffect = rememberHoverEffect(
-        enableScale = false
-    )
 
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .hoverable(hoverEffect.interactionSource),
+
+    HoverCard(
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(
-            width = AppDimensions.BorderThin,
-            brush = hoverEffect.borderBrush
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
     ) {
         Column(
             modifier = Modifier.padding(20.dp),

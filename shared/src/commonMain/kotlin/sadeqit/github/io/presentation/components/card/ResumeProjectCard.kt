@@ -1,16 +1,14 @@
-package sadeqit.github.io.presentation.components
+package sadeqit.github.io.presentation.components.card
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -21,18 +19,16 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
 import sadeqit.github.io.domain.model.ResumeProject
+import sadeqit.github.io.presentation.components.SkillList
 import sadeqit.github.io.presentation.theme.AppDimensions
-import sadeqit.shared.generated.resources.Res
-import sadeqit.shared.generated.resources.ic_bazar
-import sadeqit.shared.generated.resources.ic_github
 
 @Composable
 fun ResumeProjectCard(
@@ -58,7 +54,8 @@ fun ResumeProjectCard(
                 .fillMaxWidth()
                 .padding(AppDimensions.Space20),
             verticalArrangement = Arrangement.spacedBy(AppDimensions.Space16),
-        ) {
+        )
+        {
             Text(
                 text = project.name,
                 style = MaterialTheme.typography.titleLarge,
@@ -70,33 +67,12 @@ fun ResumeProjectCard(
                 text = project.description,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Justify
             )
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.outlineVariant,
             )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space8),
-                verticalArrangement = Arrangement.spacedBy(AppDimensions.Space8),
-            ) {
-                project.technologies.forEach { technology ->
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                        ),
-                    ) {
-                        Text(
-                            text = technology,
-                            modifier = Modifier.padding(
-                                horizontal = AppDimensions.Space12,
-                                vertical = AppDimensions.Space8,
-                            ),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.W400,
-                            color = MaterialTheme.colorScheme.onBackground,
-                        )
-                    }
-                }
-            }
+            SkillList(skills = project.technologies)
 
             if (
                 project.githubUrl != null ||
@@ -109,53 +85,58 @@ fun ResumeProjectCard(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space8),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     project.githubUrl?.let {
-                        TextButton(
-                            onClick = onGithubClick,
-                            contentPadding = PaddingValues(horizontal = AppDimensions.Space8),
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space8),
-                            ) {
-                                Image(
-                                    painter = painterResource(Res.drawable.ic_github),
-                                    contentDescription = "GitHub",
-                                    modifier = Modifier.size(30.dp),
+                        Row(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(12.dp))
+                                .border(
+                                    width = 2.dp,
+                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                                    shape = RoundedCornerShape(12.dp)
                                 )
-                                Text("گیت هاب")
-                            }
+                                .clickable(onClick = onGithubClick)
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text("گیت‌ هاب")
                         }
                     }
 
                     project.appUrl?.let {
-                        TextButton(
-                            onClick = onAppClick,
-                            contentPadding = PaddingValues(horizontal = AppDimensions.Space8),
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Space8),
-                            ) {
-                                Image(
-                                    painter = painterResource(Res.drawable.ic_bazar),
-                                    contentDescription = "Cafe Bazaar",
-                                    modifier = Modifier.size(30.dp),
+                        Row(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(12.dp))
+                                .border(
+                                    width = 2.dp,
+                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                                    shape = RoundedCornerShape(12.dp)
                                 )
-                                Text("کافه‌ بازار")
-                            }
+                                .clickable(onClick = onAppClick)
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text("کافه‌ بازار")
                         }
                     }
 
-                    Spacer(Modifier.weight(1f))
-
                     project.projectId?.let {
-                        TextButton(onClick = onDetailsClick) {
+                        Row(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(12.dp))
+                                .border(
+                                    width = 2.dp,
+                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                                    shape = RoundedCornerShape(12.dp)
+                                )
+                                .clickable(onClick = onDetailsClick)
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
                             Text("جزئیات")
-                            Spacer(Modifier.width(AppDimensions.Space8))
+                            Spacer(Modifier.width(AppDimensions.Space4))
                             Icon(
                                 Icons.AutoMirrored.Rounded.ArrowForward,
                                 contentDescription = null,
@@ -163,6 +144,7 @@ fun ResumeProjectCard(
                         }
                     }
                 }
+
             }
         }
     }

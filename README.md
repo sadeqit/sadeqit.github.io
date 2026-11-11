@@ -46,8 +46,6 @@ Visit the website to learn more about each project, its features, technologies, 
 - Kotlin/Wasm
 - Kotlin/JS
 - Koin
-- Coil
-- Markdown
 
 ## Links
 

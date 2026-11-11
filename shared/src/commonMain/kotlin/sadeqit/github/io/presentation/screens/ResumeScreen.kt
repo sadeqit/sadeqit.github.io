@@ -1,16 +1,12 @@
 package sadeqit.github.io.presentation.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,8 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,12 +39,12 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import sadeqit.github.io.domain.model.ResumeSocialLink
 import sadeqit.github.io.domain.repository.ResumeRepository
-import sadeqit.github.io.presentation.components.AppFooter
-import sadeqit.github.io.presentation.components.ResumeProjectCard
-import sadeqit.github.io.presentation.components.rememberHoverEffect
+import sadeqit.github.io.presentation.components.app.AppFooter
+import sadeqit.github.io.presentation.components.ContentSection
+import sadeqit.github.io.presentation.components.card.ResumeProjectCard
+import sadeqit.github.io.presentation.components.SkillList
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppBreakpoints
-import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.shared.generated.resources.Res
 import sadeqit.shared.generated.resources.gmail
 import sadeqit.shared.generated.resources.ic_github
@@ -111,7 +105,7 @@ fun ResumeScreen(
 
             item(key = "resume-summary") {
                 HomeReveal {
-                    ResumeSection(
+                    ContentSection(
                         title = "معرفی",
                         modifier = contentModifier,
                     ) {
@@ -137,7 +131,7 @@ fun ResumeScreen(
 
             item(key = "resume-skills") {
                 HomeReveal {
-                    ResumeSection(
+                    ContentSection(
                         title = "مهارت‌ های فنی",
                         modifier = contentModifier,
                     ) {
@@ -171,7 +165,7 @@ fun ResumeScreen(
 
             item(key = "resume-experiences") {
                 HomeReveal {
-                    ResumeSection(
+                    ContentSection(
                         title = "سوابق فعالیت",
                         modifier = contentModifier,
                     ) {
@@ -208,7 +202,7 @@ fun ResumeScreen(
 
             item(key = "resume-projects") {
                 HomeReveal {
-                    ResumeSection(
+                    ContentSection(
                         title = "پروژه‌های منتخب",
                         modifier = contentModifier,
                     ) {
@@ -241,7 +235,7 @@ fun ResumeScreen(
             }
             item(key = "resume-social-links") {
                 HomeReveal {
-                    ResumeSection(
+                    ContentSection(
                         title = "راه‌ های ارتباطی",
                         modifier = contentModifier,
                     ) {
@@ -309,7 +303,7 @@ private fun SocialLinkItem(
             .border(
                 width = 2.dp,
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(12.dp)
             )
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -338,70 +332,5 @@ private fun SocialLinkItem(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.primary,
         )
-    }
-}
-
-@Composable
-private fun ResumeSection(
-    title: String,
-    modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit, ) {
-    val hoverEffect = rememberHoverEffect(enableScale = false)
-
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Text(
-            text = title,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
-
-        Card(
-            modifier = Modifier.hoverable(hoverEffect.interactionSource),
-            border = BorderStroke(
-                width = AppDimensions.BorderThin,
-                brush = hoverEffect.borderBrush,
-            ),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                content = content,
-            )
-        }
-    }
-}
-@Composable
-private fun SkillList(skills: List<String>) {
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        skills.forEach { skill ->
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                ),
-            ) {
-                Text(
-                    text = skill,
-                    modifier = Modifier.padding(
-                        horizontal = 12.dp,
-                        vertical = 8.dp,
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.W400,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-            }
-        }
     }
 }

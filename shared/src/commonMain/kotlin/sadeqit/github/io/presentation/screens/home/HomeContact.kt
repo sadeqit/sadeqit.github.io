@@ -1,15 +1,19 @@
 package sadeqit.github.io.presentation.screens.home
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -17,22 +21,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import sadeqit.github.io.presentation.components.rememberHoverEffect
+import org.jetbrains.compose.resources.painterResource
 import sadeqit.github.io.presentation.theme.AppDimensions
+import sadeqit.shared.generated.resources.Res
+import sadeqit.shared.generated.resources.contact
 
 @Composable
 fun HomeContact(
     isMobile: Boolean,
     onContactClick: () -> Unit,
 ) {
-    val hoverEffect = rememberHoverEffect(
-        enableScale = true,
-        scale = 1.04f
-    )
+
     HomeReveal {
         HomeContainer(
             modifier = Modifier.padding(
@@ -78,20 +81,34 @@ fun HomeContact(
 
                     Spacer(modifier = Modifier.height(AppDimensions.Space4))
 
-                    Button(
-                        onClick = onContactClick,
-                        modifier = Modifier.graphicsLayer {
-                            scaleX = hoverEffect.scale
-                            scaleY = hoverEffect.scale
-                        },
-                        interactionSource = hoverEffect.interactionSource,
-                        shape = MaterialTheme.shapes.medium,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        )
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .border(
+                                width = 2.dp,
+                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .clickable(onClick = onContactClick)
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text("در تماس باشیم")
+                        Image(
+                            painter = painterResource(Res.drawable.contact),
+                            contentDescription = null,
+                            modifier = Modifier.size(30.dp)
+                        )
+
+                        Spacer(Modifier.width(8.dp))
+
+                        Text(
+                            text = "تماس با من",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
                     }
+
                 }
             }
         }

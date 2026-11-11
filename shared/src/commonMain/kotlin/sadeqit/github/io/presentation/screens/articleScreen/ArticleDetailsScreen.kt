@@ -48,7 +48,7 @@ import org.koin.compose.koinInject
 import sadeqit.github.io.domain.model.Article
 import sadeqit.github.io.domain.model.ArticleContent
 import sadeqit.github.io.domain.repository.ArticleRepository
-import sadeqit.github.io.presentation.components.AppFooter
+import sadeqit.github.io.presentation.components.app.AppFooter
 import sadeqit.github.io.presentation.components.article.ArticleContentRenderer
 import sadeqit.github.io.presentation.components.article.ArticleTableOfContents
 import sadeqit.github.io.presentation.screens.home.HomeReveal
@@ -235,7 +235,7 @@ fun ArticleDetailsScreen(
                                     Spacer(Modifier.height(7.dp))
 
                                     Text(
-                                        text = "جمع‌بندی",
+                                        text = "جمع‌ بندی",
                                         style = MaterialTheme.typography.headlineMedium,
                                         color = MaterialTheme.colorScheme.onBackground
                                     )

@@ -1,4 +1,4 @@
-package sadeqit.github.io.presentation.components
+package sadeqit.github.io.presentation.components.app
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

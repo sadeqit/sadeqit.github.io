@@ -1,11 +1,8 @@
-
 package sadeqit.github.io.presentation.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -22,8 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,8 +38,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import sadeqit.github.io.domain.model.ResumeSocialLink
 import sadeqit.github.io.domain.repository.ResumeRepository
-import sadeqit.github.io.presentation.components.AppFooter
-import sadeqit.github.io.presentation.components.rememberHoverEffect
+import sadeqit.github.io.presentation.components.app.AppFooter
+import sadeqit.github.io.presentation.components.card.HoverCard
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppBreakpoints
 import sadeqit.github.io.presentation.theme.AppDimensions
@@ -54,8 +49,6 @@ import sadeqit.shared.generated.resources.ic_github
 import sadeqit.shared.generated.resources.instagram
 import sadeqit.shared.generated.resources.linkedin
 import sadeqit.shared.generated.resources.telegram
-
-
 
 @Composable
 fun ContactScreen() {
@@ -168,8 +161,6 @@ private fun ContactSection(
     modifier: Modifier = Modifier,
     content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit
 ) {
-    val hoverEffect = rememberHoverEffect(enableScale = false)
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -181,16 +172,7 @@ private fun ContactSection(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Card(
-            modifier = Modifier.hoverable(hoverEffect.interactionSource),
-            border = BorderStroke(
-                width = AppDimensions.BorderThin,
-                brush = hoverEffect.borderBrush
-            ),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        ) {
+        HoverCard {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -223,7 +205,7 @@ private fun ContactSocialLinkItem(
             .border(
                 width = 2.dp,
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(12.dp)
             )
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),

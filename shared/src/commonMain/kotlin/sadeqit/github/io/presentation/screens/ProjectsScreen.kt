@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import sadeqit.github.io.domain.repository.ProjectRepository
-import sadeqit.github.io.presentation.components.AppFooter
-import sadeqit.github.io.presentation.components.ProjectCard
+import sadeqit.github.io.presentation.components.app.AppFooter
+import sadeqit.github.io.presentation.components.card.ProjectCard
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppBreakpoints
 import sadeqit.github.io.presentation.theme.AppDimensions

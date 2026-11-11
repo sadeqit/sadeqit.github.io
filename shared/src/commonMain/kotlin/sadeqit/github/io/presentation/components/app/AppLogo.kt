@@ -1,4 +1,4 @@
-package sadeqit.github.io.presentation.components
+package sadeqit.github.io.presentation.components.app
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode

@@ -1,9 +1,5 @@
 package sadeqit.github.io.presentation.screens.home
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,16 +7,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import sadeqit.github.io.presentation.components.rememberHoverEffect
+import sadeqit.github.io.presentation.components.card.HoverCard
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 @Composable
@@ -104,20 +96,9 @@ private fun SkillGroup(
     title: String,
     items: String,
 ) {
-    val hoverEffect = rememberHoverEffect(
-        enableScale = false
-    )
 
-    Card(
-        modifier = modifier
-            .hoverable(hoverEffect.interactionSource),
-        border = BorderStroke(
-            width = AppDimensions.BorderThin,
-            brush = hoverEffect.borderBrush
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
+    HoverCard(
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier.padding(AppDimensions.Space16),
@@ -136,34 +117,5 @@ private fun SkillGroup(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-    }
-}
-
-@Composable
-fun SkillChip(
-    text: String,
-) {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(AppDimensions.Space8))
-            .background(
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
-            )
-            .border(
-                width = AppDimensions.BorderThin,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-                shape = RoundedCornerShape(AppDimensions.Space8)
-            )
-            .padding(
-                horizontal = AppDimensions.Space12,
-                vertical = AppDimensions.Space8
-            )
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.SemiBold
-        )
     }
 }

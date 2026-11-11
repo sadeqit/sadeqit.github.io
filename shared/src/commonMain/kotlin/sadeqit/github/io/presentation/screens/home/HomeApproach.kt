@@ -1,7 +1,5 @@
 package sadeqit.github.io.presentation.screens.home
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,14 +10,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import sadeqit.github.io.presentation.components.rememberHoverEffect
+import sadeqit.github.io.presentation.components.card.HoverCard
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 private data class ApproachItem(
@@ -61,6 +57,7 @@ private val approachItems = listOf(
         description = "طراحی با نگاه بلندمدت؛ به‌ گونه‌ای که محصول با رشد قابلیت‌ ها و پیچیدگی، پایدار و گسترش‌ پذیر بماند."
     ),
 )
+
 @Composable
 fun HomeApproach(
     isMobile: Boolean,
@@ -140,21 +137,8 @@ private fun ApproachCard(
     title: String,
     description: String,
 ) {
-    val hoverEffect = rememberHoverEffect(
-        enableScale = false
-    )
 
-    Card(
-        modifier = modifier
-            .hoverable(hoverEffect.interactionSource),
-        border = BorderStroke(
-            width = AppDimensions.BorderThin,
-            brush = hoverEffect.borderBrush
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-    ) {
+    HoverCard(modifier = modifier) {
         Column(
             modifier = Modifier.padding(AppDimensions.Space20),
             verticalArrangement = Arrangement.spacedBy(AppDimensions.Space12)

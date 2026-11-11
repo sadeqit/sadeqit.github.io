@@ -12,7 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import sadeqit.github.io.domain.model.ArticleBlock
 import sadeqit.github.io.domain.model.CalloutType
 
@@ -55,16 +58,19 @@ fun ArticleCalloutBlock(
         ) {
             Text(
                 text = block.title ?: defaultTitle,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleMedium,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.W500,
                 color = accentColor
             )
 
             Text(
                 text = block.text,
-                style = MaterialTheme.typography.bodyMedium.copy(
+                style = MaterialTheme.typography.bodyLarge.copy(
                     lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.5f
                 ),
-                color = colorScheme.onBackground
+                color = colorScheme.onBackground,
+                textAlign = TextAlign.Justify
             )
         }
     }

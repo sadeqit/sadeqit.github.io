@@ -14,9 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import sadeqit.github.io.domain.model.Project
 import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
-import sadeqit.github.io.presentation.components.ProjectInfoChip
-import sadeqit.github.io.presentation.components.ProjectReleaseChip
-import sadeqit.github.io.presentation.components.ProjectTypeChip
+import sadeqit.github.io.presentation.components.card.ProjectInfoChip
+import sadeqit.github.io.presentation.components.card.ProjectReleaseChip
+import sadeqit.github.io.presentation.components.card.ProjectTypeChip
 import sadeqit.github.io.presentation.components.rememberHoverEffect
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.screens.home.HomeRevealItem

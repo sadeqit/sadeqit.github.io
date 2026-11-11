@@ -1,22 +1,16 @@
 package sadeqit.github.io.presentation.screens.projectScreen.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import sadeqit.github.io.presentation.components.rememberHoverEffect
-import sadeqit.github.io.presentation.theme.AppDimensions
+import sadeqit.github.io.presentation.components.card.HoverCard
 import sadeqit.shared.generated.resources.Res
 import sadeqit.shared.generated.resources.android_about
 import sadeqit.shared.generated.resources.android_air_quality
@@ -37,24 +31,13 @@ fun ProjectScreenshot(
     name: String,
     modifier: Modifier = Modifier
 ) {
-    val hoverEffect = rememberHoverEffect(
-        enableScale = false
-    )
+
     val resource = screenshotResource(name)
 
     if (resource != null) {
-        Card(
-            modifier = modifier
-                .hoverable(hoverEffect.interactionSource),
-
-            border = BorderStroke(
-                width = AppDimensions.BorderThin,
-                brush = hoverEffect.borderBrush
-            ),
+        HoverCard(
+            modifier = modifier,
             shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
         ) {
             Image(
                 painter = painterResource(resource),

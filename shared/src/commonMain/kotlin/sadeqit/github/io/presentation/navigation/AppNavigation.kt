@@ -7,9 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import org.koin.compose.koinInject
-import sadeqit.github.io.data.content.resumeContent
 import sadeqit.github.io.domain.repository.ProjectRepository
-import sadeqit.github.io.presentation.components.AppShell
+import sadeqit.github.io.presentation.components.app.AppShell
 import sadeqit.github.io.presentation.screens.AboutScreen
 import sadeqit.github.io.presentation.screens.ArticlesScreen
 import sadeqit.github.io.presentation.screens.ContactScreen

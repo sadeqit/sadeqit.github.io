@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import sadeqit.github.io.domain.model.Article
 import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
-import sadeqit.github.io.presentation.components.ArticleCard
+import sadeqit.github.io.presentation.components.card.ArticleCard
 import sadeqit.github.io.presentation.theme.AppDimensions
 
 @Composable

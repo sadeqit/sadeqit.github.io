@@ -23,6 +23,6 @@ fun ArticleParagraph(
             lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.6f
         ),
         color = MaterialTheme.colorScheme.onBackground,
-        textAlign = TextAlign.Start
+        textAlign = TextAlign.Justify,
     )
 }

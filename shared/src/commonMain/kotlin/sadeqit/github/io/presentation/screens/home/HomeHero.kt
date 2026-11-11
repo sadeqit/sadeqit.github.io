@@ -7,6 +7,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -303,6 +304,34 @@ private fun HeroCodeCard() {
                 SkillChip("KMP")
             }
         }
+    }
+}
+@Composable
+private fun SkillChip(
+    text: String,
+) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(AppDimensions.Space8))
+            .background(
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
+            )
+            .border(
+                width = AppDimensions.BorderThin,
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                shape = RoundedCornerShape(AppDimensions.Space8)
+            )
+            .padding(
+                horizontal = AppDimensions.Space12,
+                vertical = AppDimensions.Space8
+            )
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }
 

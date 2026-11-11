@@ -4,12 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,9 +37,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
-import sadeqit.github.io.presentation.components.AnimatedOutlinedButton
-import sadeqit.github.io.presentation.components.AppFooter
-import sadeqit.github.io.presentation.components.rememberHoverEffect
+import sadeqit.github.io.presentation.components.app.AppFooter
+import sadeqit.github.io.presentation.components.ContentSection
+import sadeqit.github.io.presentation.components.SkillList
 import sadeqit.github.io.presentation.screens.home.HomeReveal
 import sadeqit.github.io.presentation.theme.AppBreakpoints
 import sadeqit.github.io.presentation.theme.AppDimensions
@@ -96,7 +94,7 @@ fun AboutScreen(
 
             item(key = "about-story") {
                 HomeReveal {
-                    AboutSection(
+                    ContentSection(
                         title = "مسیر من",
                         modifier = contentModifier
                     ) {
@@ -151,7 +149,7 @@ fun AboutScreen(
 
             item(key = "about-approach") {
                 HomeReveal {
-                    AboutSection(
+                    ContentSection(
                         title = "نگاه من به توسعه نرم‌افزار",
                         modifier = contentModifier
                     ) {
@@ -196,7 +194,7 @@ fun AboutScreen(
 
             item(key = "about-interests") {
                 HomeReveal {
-                    AboutSection(
+                    ContentSection(
                         title = "حوزه‌های تخصصی و علاقه‌مندی",
                         modifier = contentModifier
                     ) {
@@ -222,11 +220,8 @@ fun AboutScreen(
                         )
 
                         HorizontalDivider()
-                        FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            listOf(
+                        SkillList(
+                            skills = listOf(
                                 "Kotlin",
                                 "Android",
                                 "Jetpack Compose",
@@ -240,11 +235,9 @@ fun AboutScreen(
                                 "Koin",
                                 "Hilt",
                                 "Ktor",
-                                "SQLDelight"
-                            ).forEach { skill ->
-                                AboutSkillItem(skill)
-                            }
-                        }
+                                "SQLDelight",
+                            ),
+                        )
                     }
                 }
             }
@@ -261,7 +254,7 @@ fun AboutScreen(
 
             item(key = "about-projects") {
                 HomeReveal {
-                    AboutSection(
+                    ContentSection(
                         title = "پروژه‌های منتخب",
                         modifier = contentModifier
                     ) {
@@ -296,7 +289,7 @@ fun AboutScreen(
 
             item(key = "about-focus") {
                 HomeReveal {
-                    AboutSection(
+                    ContentSection(
                         title = "تمرکز فعلی من",
                         modifier = contentModifier
                     ) {
@@ -328,7 +321,7 @@ fun AboutScreen(
 
             item(key = "about-contact") {
                 HomeReveal {
-                    AboutSection(
+                    ContentSection(
                         title = "در ارتباط باشیم",
                         modifier = contentModifier
                     ) {
@@ -376,8 +369,8 @@ fun AboutScreen(
                 Box(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                   CompositionLocalProvider(
-                      LocalLayoutDirection provides
+                    CompositionLocalProvider(
+                        LocalLayoutDirection provides
                                 LayoutDirection.Ltr
                     ) {
                         AppFooter()
@@ -509,45 +502,6 @@ private fun AboutIntroText(
 }
 
 @Composable
-private fun AboutSection(
-    title: String,
-    modifier: Modifier = Modifier,
-    content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit
-) {
-    val hoverEffect = rememberHoverEffect(enableScale = false)
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Text(
-            text = title,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
-        Card(
-            modifier = Modifier.hoverable(hoverEffect.interactionSource),
-            border = BorderStroke(
-                width = AppDimensions.BorderThin,
-                brush = hoverEffect.borderBrush
-            ),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                content = content
-            )
-        }
-    }
-}
-
-@Composable
 private fun AboutPrinciple(
     title: String,
     description: String
@@ -570,24 +524,4 @@ private fun AboutPrinciple(
         )
     }
     HorizontalDivider()
-}
-
-@Composable
-private fun AboutSkillItem(skill: String) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-        ),
-    ) {
-        Text(
-            text = skill,
-            modifier = Modifier.padding(
-                horizontal = 12.dp,
-                vertical = 8.dp,
-            ),
-            style = MaterialTheme.typography.bodySmall,
-            fontWeight = FontWeight.W400,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
-    }
 }

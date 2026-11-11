@@ -1,9 +1,7 @@
-package sadeqit.github.io.presentation.components
+package sadeqit.github.io.presentation.components.card
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,8 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForward
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,9 +42,6 @@ fun ArticleCard(
     article: Article,
     onClick: (String) -> Unit,
 ) {
-    val hoverEffect = rememberHoverEffect(
-        enableScale = false
-    )
 
     val articleImage = when (article.cover) {
         "article_clean_code" ->
@@ -60,18 +53,9 @@ fun ArticleCard(
         else -> null
     }
 
-    Card(
-        modifier = modifier
-            .height(580.dp)
-            .hoverable(hoverEffect.interactionSource),
-        border = BorderStroke(
-            width = AppDimensions.BorderThin,
-            brush = hoverEffect.borderBrush
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        shape = RoundedCornerShape(AppDimensions.Space16)
+    HoverCard(
+        modifier = modifier.height(580.dp),
+        shape = RoundedCornerShape(AppDimensions.Space16),
     ) {
         Column(
             modifier = Modifier.fillMaxSize()

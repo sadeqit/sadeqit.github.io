@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import org.koin.compose.koinInject
 import sadeqit.github.io.domain.repository.ArticleRepository
 import sadeqit.github.io.domain.repository.ProjectRepository
-import sadeqit.github.io.presentation.components.AppFooter
+import sadeqit.github.io.presentation.components.app.AppFooter
 import sadeqit.github.io.presentation.screens.home.HomeAbout
 import sadeqit.github.io.presentation.screens.home.HomeApproach
 import sadeqit.github.io.presentation.screens.home.HomeArticles

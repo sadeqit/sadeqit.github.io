@@ -1,4 +1,4 @@
-package sadeqit.github.io.presentation.components
+package sadeqit.github.io.presentation.components.app
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -32,6 +32,7 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import sadeqit.github.io.presentation.components.ThemeSelector
 import sadeqit.github.io.presentation.navigation.AppRoute
 import sadeqit.github.io.presentation.theme.AppDimensions
 import sadeqit.github.io.presentation.theme.AppThemeMode

@@ -9,7 +9,6 @@ private const val ThemeStorageKey = "sadeqit-theme"
 private fun loadThemeValue(): String? =
     js("localStorage.getItem('$ThemeStorageKey')")
 
-@OptIn(ExperimentalJsExport::class)
 private fun saveThemeValue(value: String) {
     js("localStorage.setItem('$ThemeStorageKey', value)")
 }
